@@ -54,7 +54,6 @@ const Zonas: FunctionComponent = (props: any) => {
     })
   }
   const zonasData = useSelector((state: IState) => state.zonas)
-  const [lang, setlang] = React.useState<any>('en')
   const theme = minimum
   const [currentUser, setcurrentUser] = React.useState<any>(AuthService.getCurrentUser())
   const [profileMenuAnchor, setprofileMenuAnchor] = React.useState<any>(null)
@@ -127,12 +126,6 @@ const Zonas: FunctionComponent = (props: any) => {
   }
 
   // Theme selection
-
-  React.useEffect(() => {
-    if (typeof langStrings !== 'undefined') {
-      setlang(langStrings[localStorage.getItem('aptugolang') || 'en'])
-    }
-  }, [])
 
   return (
     <React.Fragment>

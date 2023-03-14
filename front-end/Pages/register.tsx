@@ -62,18 +62,11 @@ const Register: FunctionComponent = (props: any) => {
       [name]: value,
     })
   }
-  const [lang, setlang] = React.useState<any>('en')
   const theme = minimum
   const [registerError, setregisterError] = React.useState<any>(null)
   const dispatch = useDispatch()
 
   // Theme selection
-
-  React.useEffect(() => {
-    if (typeof langStrings !== 'undefined') {
-      setlang(langStrings[localStorage.getItem('aptugolang') || 'en'])
-    }
-  }, [])
 
   const usersData = useSelector((state: IState) => state.users)
 

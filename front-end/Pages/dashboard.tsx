@@ -8,7 +8,6 @@ import AuthService from '../services/auth.service'
 
 const Dashboard: FunctionComponent = (props: any) => {
   const classes = baseClasses
-  const [lang, setlang] = React.useState<any>('en')
   const theme = minimum
   const [currentUser, setcurrentUser] = React.useState<any>(AuthService.getCurrentUser())
   const [profileMenuAnchor, setprofileMenuAnchor] = React.useState<any>(null)
@@ -18,12 +17,6 @@ const Dashboard: FunctionComponent = (props: any) => {
   }
 
   // Theme selection
-
-  React.useEffect(() => {
-    if (typeof langStrings !== 'undefined') {
-      setlang(langStrings[localStorage.getItem('aptugolang') || 'en'])
-    }
-  }, [])
 
   React.useEffect(() => {
     if (currentUser) {

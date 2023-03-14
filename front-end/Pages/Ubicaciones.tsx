@@ -53,7 +53,6 @@ const Ubicaciones: FunctionComponent = (props: any) => {
     })
   }
   const ubicacionesData = useSelector((state: IState) => state.ubicaciones)
-  const [lang, setlang] = React.useState<any>('en')
   const theme = minimum
   const [currentUser, setcurrentUser] = React.useState<any>(AuthService.getCurrentUser())
   const [profileMenuAnchor, setprofileMenuAnchor] = React.useState<any>(null)
@@ -126,12 +125,6 @@ const Ubicaciones: FunctionComponent = (props: any) => {
   }
 
   // Theme selection
-
-  React.useEffect(() => {
-    if (typeof langStrings !== 'undefined') {
-      setlang(langStrings[localStorage.getItem('aptugolang') || 'en'])
-    }
-  }, [])
 
   return (
     <React.Fragment>

@@ -50,7 +50,6 @@ const localStyles = {
 }
 const RetrievePassword: FunctionComponent = (props: any) => {
   const classes = mergeClasses(baseClasses, localStyles)
-  const [lang, setlang] = React.useState<any>('en')
   const theme = minimum
   const [userData, setuserData] = React.useState<any>({ _id: null, Password: '' })
   const [recoverSuccess, setrecoverSuccess] = React.useState<any>(null)
@@ -107,12 +106,6 @@ const RetrievePassword: FunctionComponent = (props: any) => {
   const dispatch = useDispatch()
 
   // Theme selection
-
-  React.useEffect(() => {
-    if (typeof langStrings !== 'undefined') {
-      setlang(langStrings[localStorage.getItem('aptugolang') || 'en'])
-    }
-  }, [])
 
   const sendNonce = () => {
     setrecoverSuccess(null)

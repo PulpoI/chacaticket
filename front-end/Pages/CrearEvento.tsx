@@ -1,16 +1,16 @@
 import React, { FunctionComponent } from 'react'
 import baseClasses from './layout.module.scss'
-import moment from 'moment'
+
 import TextField from '@mui/material/TextField'
 import axios from 'axios'
 import minimum from '../components/Themes/minimum.module.scss'
 
+import moment from 'moment'
 import authHeaders from '../services/auth-header'
 import AuthService from '../services/auth.service'
 
 const CrearEvento: FunctionComponent = (props: any) => {
   const classes = baseClasses
-  const [lang, setlang] = React.useState<any>('en')
   const theme = minimum
   const [currentUser, setcurrentUser] = React.useState<any>(AuthService.getCurrentUser())
   const [profileMenuAnchor, setprofileMenuAnchor] = React.useState<any>(null)
@@ -22,12 +22,6 @@ const CrearEvento: FunctionComponent = (props: any) => {
   }
 
   // Theme selection
-
-  React.useEffect(() => {
-    if (typeof langStrings !== 'undefined') {
-      setlang(langStrings[localStorage.getItem('aptugolang') || 'en'])
-    }
-  }, [])
 
   React.useEffect(() => {
     if (currentUser?._id) {
@@ -60,6 +54,8 @@ const CrearEvento: FunctionComponent = (props: any) => {
               setfechaEvento(e.target.value)
             }}
           />
+
+          <TextField variant="standard" type="text" />
         </div>
       </div>
     </React.Fragment>

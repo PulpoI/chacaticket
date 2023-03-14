@@ -20,7 +20,6 @@ import AuthService from '../services/auth.service'
 
 const DetallesdeEvento: FunctionComponent = (props: any) => {
   const classes = baseClasses
-  const [lang, setlang] = React.useState<any>('en')
   const theme = minimum
   const [currentUser, setcurrentUser] = React.useState<any>(AuthService.getCurrentUser())
   const [profileMenuAnchor, setprofileMenuAnchor] = React.useState<any>(null)
@@ -38,12 +37,6 @@ const DetallesdeEvento: FunctionComponent = (props: any) => {
   }
 
   // Theme selection
-
-  React.useEffect(() => {
-    if (typeof langStrings !== 'undefined') {
-      setlang(langStrings[localStorage.getItem('aptugolang') || 'en'])
-    }
-  }, [])
 
   const { eventoId } = useParams()
 
@@ -88,9 +81,11 @@ const DetallesdeEvento: FunctionComponent = (props: any) => {
       .put(`http://localhost:4567/api/Zonas/${zonaId}`, {
         Nombre: nuevoNombreZona,
       })
-      .then((result) => {
-        setzonas([result.data])
-      })
+      .then((result) => {})
+
+    axios.get(`http://localhost:4567/api/Eventos/${eventoId}`).then((result) => {
+      setzonas(result.data.docs[0].Zonas)
+    })
   }
 
   return (
