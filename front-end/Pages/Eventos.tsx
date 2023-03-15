@@ -49,6 +49,7 @@ const Eventos: FunctionComponent = (props: any) => {
     Imagen: '',
     NombreLugar: null,
   }
+ 
   const [Eventosdata, setEventosData] = React.useState<any>(initialDataEventos)
   const handleEventosChange = (name: string) => (event: any) => {
     const value = event?.target ? (event.target.files ? event.target.files[0] : event.currentTarget?.value || event.target.value) : event
@@ -57,6 +58,7 @@ const Eventos: FunctionComponent = (props: any) => {
       [name]: value,
     })
   }
+  
   const eventosData = useSelector((state: IState) => state.eventos)
   const theme = minimum
   const [currentUser, setcurrentUser] = React.useState<any>(AuthService.getCurrentUser())
@@ -130,7 +132,7 @@ const Eventos: FunctionComponent = (props: any) => {
   }
 
   // Theme selection
-
+ 
   return (
     <React.Fragment>
       <ThemeProvider theme={aptugotheme}>

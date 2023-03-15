@@ -1,0 +1,18 @@
+.autocomplete .aptugoDropdown :global(.aptugo__control):hover {
+  border-color: rgba(0, 0, 0, 0.87);
+}
+
+.autocomplete .aptugoDropdown :global(.aptugo__value-container) {
+  height: 56px;
+}
+
+.autocomplete .aptugoDropdown :global(.aptugo__menu) {
+  z-index: 10;
+}
+
+.autocomplete .aptugoDropdown :global(.aptugo__control--is-focused) {
+  border-width: 0;
+  -webkit-box-shadow: none;
+          box-shadow: none;
+}
+/*# sourceMappingURL=autocomplete.module.css.map */

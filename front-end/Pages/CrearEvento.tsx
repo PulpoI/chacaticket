@@ -6,6 +6,7 @@ import axios from 'axios'
 import minimum from '../components/Themes/minimum.module.scss'
 
 import moment from 'moment'
+import FileUpload from '../components/FileUpload/FileUpload'
 import authHeaders from '../services/auth-header'
 import AuthService from '../services/auth.service'
 
@@ -14,6 +15,8 @@ const CrearEvento: FunctionComponent = (props: any) => {
   const theme = minimum
   const [currentUser, setcurrentUser] = React.useState<any>(AuthService.getCurrentUser())
   const [profileMenuAnchor, setprofileMenuAnchor] = React.useState<any>(null)
+  const [imagenEvento, setimagenEvento] = React.useState<any>([])
+  const [horaEvento, sethoraEvento] = React.useState<any>('21:00')
   const [fechaEvento, setfechaEvento] = React.useState<any>(new Date())
   const [nombreEvento, setnombreEvento] = React.useState<any>('')
 
@@ -23,16 +26,19 @@ const CrearEvento: FunctionComponent = (props: any) => {
 
   // Theme selection
 
+  //para mostrar hora
+  // console.log(moment((horaEvento)).format("hh:mm A"))
+
   React.useEffect(() => {
     if (currentUser?._id) {
-      axios.post(`http://localhost:4567/api/Eventos/`).then((result) => {})
+      axios.get(`http://localhost:4567/api/Eventos/`).then((result) => {})
     }
   }, [currentUser])
 
   return (
     <React.Fragment>
       <div className={classes.mainPanel}>
-        <div title="div">
+        <div title="Nombre de Evento">
           <TextField
             variant="standard"
             label="Nombre del Evento"
@@ -44,10 +50,21 @@ const CrearEvento: FunctionComponent = (props: any) => {
           />
         </div>
 
+        <div title="Imagen de Evento">
+          <FileUpload
+            label="Imagen de Evento"
+            value={imagenEvento}
+            onChange={(e) => {
+              setimagenEvento(e.target.files[0])
+            }}
+            variant="standard"
+          />
+        </div>
+
         <div title="Fecha y Hora">
           <TextField
             variant="standard"
-            label="Editar Fecha de Evento"
+            label="Fecha del Evento"
             type="date"
             value={moment(fechaEvento).format('yyyy-MM-DD')}
             onChange={(e) => {
@@ -55,7 +72,11 @@ const CrearEvento: FunctionComponent = (props: any) => {
             }}
           />
 
-          <TextField variant="standard" type="text" />
+          
+
+          <div title="Horario">
+            {<TextField label="Editar Fecha de Evento" type="time" value={horaEvento} onChange={(e) => sethoraEvento(e.target.value)} />}
+          </div>
         </div>
       </div>
     </React.Fragment>

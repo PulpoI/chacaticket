@@ -1,0 +1,796 @@
+.blackNavbar {
+  background-color: #000;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+.blackNavbar button {
+  color: #fff;
+}
+
+.logo img {
+  width: 275px;
+}
+
+.topMenu {
+  float: right;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.topMenu :global(.menu) {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.smallAvatar img {
+  background-color: #69f0ae;
+  width: 44px;
+  padding: 4px;
+  border-radius: 44px;
+}
+
+.paper:global(.MuiPaper-root) {
+  min-height: calc(100% - 64px);
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  padding-bottom: 51px;
+  background: #f3f3f3;
+}
+
+.paper:global(.MuiPaper-root) > :global(.MuiContainer-root) {
+  padding: 3rem 0 0;
+  background-color: #fff;
+}
+
+.bigAvatar img {
+  width: 165px;
+  border-radius: 165px;
+}
+
+.userNick {
+  font-family: 'Montserrat';
+  font-weight: 500;
+  font-size: 30px;
+  letter-spacing: 1.575px;
+  text-align: right;
+  text-transform: capitalize;
+}
+
+.userName {
+  font-family: 'Montserrat';
+  font-size: 12px;
+  text-align: right;
+  color: #777777;
+  line-height: 20px;
+  letter-spacing: 1.26px;
+}
+
+.winsloses {
+  display: block;
+}
+
+.userMoney {
+  font-family: 'Montserrat';
+  font-size: 16px;
+  text-align: right;
+  color: #777777;
+}
+
+.rightSeparator {
+  margin-left: 32px;
+}
+
+.weekGainText {
+  font-family: 'Montserrat';
+  font-size: 15px;
+  color: #777777;
+  font-weight: 500;
+}
+
+.weekGainMoney {
+  font-family: 'Montserrat';
+  font-size: 22px;
+  color: #64dd17;
+  font-weight: 500;
+}
+
+.weekGainDetails {
+  font-family: 'Montserrat';
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  font-size: 9px;
+  color: #777777;
+}
+
+.portfolioLinks {
+  margin-top: 32px;
+}
+
+.leaguesSelector {
+  background: white;
+  padding: 1rem;
+  text-align: right;
+  -webkit-box-shadow: 1px 1px 1px;
+          box-shadow: 1px 1px 1px;
+  position: -webkit-sticky;
+  position: sticky;
+}
+
+.paper .invitation {
+  margin: 2rem 4rem;
+  border: 1px solid black;
+  padding: 4rem;
+  -webkit-box-shadow: 1px 1px 6px 2px #b9b9b936;
+          box-shadow: 1px 1px 6px 2px #b9b9b936;
+}
+
+.paper .invitation .loggedJoin {
+  text-align: center;
+  margin: 3rem 0 0;
+}
+
+.paper .invitation .acceptInviteLogo {
+  margin: -4rem -4rem 1rem;
+  background: black;
+  padding: 1rem;
+}
+
+.paper .invitation .acceptInviteLogo img {
+  margin: 0 auto;
+  max-width: 30%;
+}
+
+.paper .invitation :global(.MuiTypography-h4) {
+  display: block;
+  background: #868686ab;
+  margin: -1rem -4rem 0;
+  padding: 1rem;
+  text-align: center;
+  font-size: 1.5rem;
+  color: white;
+}
+
+.paper .invitation .loginError {
+  color: red;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.paper .invitation .invitationBox,
+.paper .invitation .invitationBoxRight {
+  margin: 1rem 0.5rem -3rem -3rem;
+  border: 1px solid black;
+  padding: 1rem;
+}
+
+.paper .invitation .invitationBox.invitationBoxRight,
+.paper .invitation .invitationBoxRight.invitationBoxRight {
+  margin: 1rem -3rem -3rem 0.5rem;
+}
+
+.paper .invitation .invitationBox :global(.MuiTypography-subtitle2),
+.paper .invitation .invitationBoxRight :global(.MuiTypography-subtitle2) {
+  background-color: black;
+  color: white;
+  padding: 1rem;
+  margin: -1rem -1rem 2rem;
+}
+
+.paper .invitation .invitationBox :global(.MuiButton-containedPrimary),
+.paper .invitation .invitationBoxRight :global(.MuiButton-containedPrimary) {
+  margin: 2rem auto 0;
+}
+
+.paper .leagueTitle {
+  text-align: center;
+  width: 100%;
+}
+
+.paper .logsTable :global(.MuiTypography-h4) {
+  margin-top: 3rem;
+  font-size: 1.5rem;
+}
+
+.paper .logsTable thead {
+  background: #ebebeb;
+}
+
+.paper .logsTable :global(.MuiTableCell-root) {
+  padding: 0.5rem;
+}
+
+.paper .fakeTable {
+  display: table;
+  margin: 1rem;
+  border: 1px solid #ebebeb;
+  border-collapse: collapse;
+}
+
+.paper .fakeTable .fakeTableHeader {
+  background-color: #ebebeb;
+  color: #777777;
+}
+
+.paper .fakeTable .fakeTableHeader > div {
+  padding: 0.5rem;
+}
+
+.paper .fakeTable .fakeTableHeader,
+.paper .fakeTable .fakeTableRow {
+  vertical-align: middle;
+  display: table-row;
+  border-bottom: 1px solid #ebebeb;
+}
+
+.paper .fakeTable .fakeTableHeader span,
+.paper .fakeTable .fakeTableRow span {
+  font-size: 14px;
+}
+
+.paper .fakeTable .fakeTableHeader .sortColumn:after,
+.paper .fakeTable .fakeTableRow .sortColumn:after {
+  font-family: 'Material Icons';
+  content: '\e5c5';
+  position: absolute;
+  right: 5px;
+  top: 5px;
+  -webkit-transition: -webkit-transform 300ms linear;
+  transition: -webkit-transform 300ms linear;
+  transition: transform 300ms linear;
+  transition: transform 300ms linear, -webkit-transform 300ms linear;
+}
+
+.paper .fakeTable .fakeTableHeader .sortInverse:after,
+.paper .fakeTable .fakeTableRow .sortInverse:after {
+  -webkit-transform: rotateZ(180deg);
+          transform: rotateZ(180deg);
+}
+
+.paper .fakeTable .fakeTableHeader .fakeTableCompany,
+.paper .fakeTable .fakeTableRow .fakeTableCompany {
+  position: relative;
+  display: table-cell;
+  vertical-align: middle;
+  width: 10%;
+  border-right: 1px solid #ebebeb;
+  padding: 0.2rem;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+.paper .fakeTable .fakeTableHeader .fakeTableCell,
+.paper .fakeTable .fakeTableRow .fakeTableCell {
+  position: relative;
+  display: table-cell;
+  width: 8%;
+  overflow: hidden;
+  vertical-align: middle;
+  border-right: 1px solid #ebebeb;
+  padding: 0.2rem;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+.paper .fakeTable .fakeTableHeader .fakeTablePerc,
+.paper .fakeTable .fakeTableHeader .fakeTablePrice,
+.paper .fakeTable .fakeTableRow .fakeTablePerc,
+.paper .fakeTable .fakeTableRow .fakeTablePrice {
+  width: 8%;
+  overflow: hidden;
+  text-align: right;
+  display: table-cell;
+  vertical-align: middle;
+  border-right: 1px solid #ebebeb;
+  padding: 0.2rem;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+.paper .fakeTable .fakeTableHeader .fakeTablePerc span,
+.paper .fakeTable .fakeTableHeader .fakeTablePrice span,
+.paper .fakeTable .fakeTableRow .fakeTablePerc span,
+.paper .fakeTable .fakeTableRow .fakeTablePrice span {
+  display: inline;
+}
+
+.paper .fakeTable .fakeTableHeader .fakeTablePerc::before,
+.paper .fakeTable .fakeTableRow .fakeTablePerc::before {
+  content: '%';
+  font-size: 10px;
+  margin-right: 2px;
+}
+
+.paper .fakeTable .fakeTableHeader .fakeTablePrice::before,
+.paper .fakeTable .fakeTableRow .fakeTablePrice::before {
+  content: '$';
+  font-size: 10px;
+  margin-right: 2px;
+}
+
+.paper .fakeTable .fakeTableHeader:hover,
+.paper .fakeTable .fakeTableRow:hover {
+  background-color: #ebebeb;
+}
+
+.fakeTableStock {
+  width: 8%;
+  overflow: hidden;
+}
+
+.sharesAddButton {
+  margin-left: 1rem;
+}
+
+.purchaseMessage {
+  display: inline;
+  margin-left: 10px;
+  color: #8e8e8e;
+  font-size: 0.7rem;
+}
+
+.peVeryHigh {
+  color: red;
+}
+
+.peHigh {
+  color: orange;
+}
+
+.peNormal {
+  color: green;
+}
+
+.peLow {
+  color: blue;
+}
+
+.fakeVeryHigh {
+  color: red;
+}
+
+.fakeTableCenterCell {
+  position: relative;
+  display: table-cell;
+  width: 8%;
+  overflow: hidden;
+  vertical-align: middle;
+  border-right: 1px solid #ebebeb;
+  padding: 0.2rem;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  text-align: center;
+}
+
+.fakeTablePercNeg {
+  color: red;
+}
+
+.fakeTablePercPos {
+  color: green;
+}
+
+.fakeTableCompanyAdd {
+  width: 28%;
+}
+
+.top10 {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.top10 > div:first-child {
+  width: 97px;
+  text-align: right;
+  font-family: Montserrat;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 19.6121px;
+  line-height: 65px;
+  letter-spacing: 1.21px;
+  color: #c4c4c4;
+}
+
+.top10 .smallAvatar img {
+  margin-left: 19px;
+  margin-right: 5px;
+}
+
+.top10 .nick {
+  font-family: Montserrat;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 19px;
+  letter-spacing: 0.01em;
+  color: #000000;
+}
+
+.top10 .worth {
+  font-family: Montserrat;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 20px;
+  letter-spacing: 0.01em;
+  color: #f50057;
+}
+
+.matchup {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+}
+
+.matchup > div {
+  width: 50%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.matchup .matchupAvatar.winning img {
+  background-color: #69f0ae;
+}
+
+.matchup .matchupAvatar img {
+  width: 110px;
+  height: 110px;
+  background-color: #f50057;
+  padding: 4px;
+  border-radius: 165px;
+}
+
+.matchup .bigAvatar img {
+  width: 90px;
+  height: 90px;
+  background-color: #f50057;
+  padding: 4px;
+}
+
+.matchup .bigAvatar.winning img {
+  background-color: #69f0ae;
+}
+
+.matchup .nick {
+  font-family: Montserrat;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 103%;
+  letter-spacing: 0.01em;
+  color: #000000;
+}
+
+.matchup > div {
+  margin: 0.5rem 0;
+}
+
+.matchup > div > div button {
+  padding: 0;
+  width: 98px;
+  height: 98px;
+  overflow: hidden;
+  border-radius: 45px;
+}
+
+.matchup > div:nth-child(even) {
+  padding-left: 3px;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  position: relative;
+}
+
+.matchup > div:nth-child(even) > div:first-child {
+  left: 110px;
+  top: 10px;
+}
+
+.matchup > div:nth-child(odd) {
+  padding-right: 3px;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+}
+
+.matchup > div:nth-child(odd) > div:first-child {
+  text-align: right;
+  margin-right: 5px;
+}
+
+.matchup .totalGainText {
+  font-family: Montserrat;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 110%;
+  letter-spacing: 0.01em;
+  color: #777777;
+}
+
+.matchup .totalGain {
+  font-family: Montserrat;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 98%;
+  letter-spacing: 0.01em;
+  color: #f50057;
+}
+
+.matchupVS {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  padding: 75px 0;
+}
+
+.stockTable {
+  padding: 1rem 0.5rem;
+}
+
+:global(#app) > div {
+  margin-bottom: 3.1rem;
+}
+
+.prevnext {
+  text-align: right;
+  padding: 1rem;
+}
+
+.searchAndFilters {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  padding: 1rem;
+}
+
+.searchAndFilters > div {
+  padding: 1rem;
+}
+
+.searchAndFilters > div:first-child {
+  -webkit-box-flex: 2;
+      -ms-flex-positive: 2;
+          flex-grow: 2;
+}
+
+.searchAndFilters > div:last-child {
+  -webkit-box-flex: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1;
+}
+
+.leaguePlayersList {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  width: 100%;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  position: relative;
+  margin: 3rem;
+  min-height: 300px;
+}
+
+.leaguePlayersList > div {
+  position: absolute;
+  -webkit-transition: all 500ms cubic-bezier(0.67, 0.17, 0.48, 1.3);
+  transition: all 500ms cubic-bezier(0.67, 0.17, 0.48, 1.3);
+}
+
+.leaguePlayersList img {
+  background-color: #69f0ae;
+  width: 165px;
+  padding: 4px;
+  border-radius: 83px;
+  height: 165px;
+}
+
+.leagueadminArea {
+  width: 100%;
+  text-align: center;
+  margin: 1rem;
+}
+
+.draftGrid {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.draftGrid > div {
+  -webkit-box-flex: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1;
+  -ms-flex-preferred-size: 0;
+      flex-basis: 0;
+  border-right: 1px solid;
+  padding: 0 0.5rem;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  color: #777777;
+}
+
+.draftGrid > div:last-child {
+  border-right: none;
+}
+
+.draftGrid > div .playerNick {
+  color: #f43079;
+}
+
+.draftGrid > div .playerPick {
+  background-color: #f4307924;
+  min-height: 2rem;
+}
+
+.draftGrid > div .currentPick {
+  background-color: #f43079;
+}
+
+.centered {
+  text-align: center;
+}
+
+.DialogRow {
+  white-space: nowrap;
+  min-width: 300px;
+  margin: 1rem 1rem 1rem 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.DialogRow > span {
+  display: inline-block;
+  white-space: nowrap;
+  text-align: right;
+  margin-right: 1rem;
+  width: 50%;
+}
+
+.vertical {
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+:global(.MuiListItemText-secondary.MuiTypography-body2) {
+  font-size: 0.6rem;
+}
+
+.money::before {
+  content: '$';
+  font-size: 10px;
+  margin-right: 2px;
+}
+
+.portfolioTopArea {
+  margin: 1rem;
+}
+
+.portfolioTopArea .avatarArea {
+  margin-right: 1rem;
+}
+
+.portfolioTopArea .userName p {
+  margin: 0;
+}
+
+.otherMatchups {
+  margin: 1rem;
+  padding-bottom: 1rem;
+}
+
+.otherMatchups :global(.MuiGrid-item) {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.otherMatchups :global(.MuiGrid-item) .firstPlayer,
+.otherMatchups :global(.MuiGrid-item) .secondPlayer {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  color: #777777;
+  font-size: 7px;
+}
+
+.otherMatchups :global(.MuiGrid-item) .firstPlayer .playerAvatar,
+.otherMatchups :global(.MuiGrid-item) .secondPlayer .playerAvatar {
+  margin: 0 0.5rem;
+}
+
+.otherMatchups :global(.MuiGrid-item) .firstPlayer .playerAvatar.winning img,
+.otherMatchups :global(.MuiGrid-item) .secondPlayer .playerAvatar.winning img {
+  background-color: #69f0ae;
+}
+
+.otherMatchups :global(.MuiGrid-item) .firstPlayer .playerAvatar img,
+.otherMatchups :global(.MuiGrid-item) .secondPlayer .playerAvatar img {
+  background-color: #f50057;
+  width: 32px;
+  padding: 2px;
+  border-radius: 32px;
+}
+
+.otherMatchups :global(.MuiGrid-item) .firstPlayer .nick,
+.otherMatchups :global(.MuiGrid-item) .secondPlayer .nick {
+  font-size: 11px;
+  color: #000000;
+  display: block;
+}
+
+.otherMatchups :global(.MuiGrid-item) .firstPlayer .earning,
+.otherMatchups :global(.MuiGrid-item) .secondPlayer .earning {
+  font-size: 11px;
+  color: #f50057;
+  display: block;
+}
+
+.loggedInUser {
+  color: #fff;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  font-weight: 100;
+  margin-left: 2rem;
+}
+
+.loggedInUser img {
+  width: 40px;
+  height: 40px;
+  border-radius: 20px;
+  margin-right: 1rem;
+}
+
+.emptyMessageScreen {
+  text-align: center;
+}
+
+.emptyMessageScreen h4 {
+  padding: 5rem;
+  text-align: center;
+}
+
+.emptyMessageScreen h6 {
+  text-align: center;
+  margin-top: -3rem;
+  padding-bottom: 5rem;
+}
+
+.emptyMessageScreen button {
+  margin: 0 auto;
+  margin-top: -3rem;
+  margin-bottom: 5rem;
+}
+
+.lastweek {
+  background: black;
+  color: white;
+  padding: 1rem;
+  margin-top: -3rem;
+  margin-bottom: 3rem;
+  text-align: center;
+  font-size: 1.5rem;
+}
+/*# sourceMappingURL=fantasyx.module.css.map */
