@@ -49,7 +49,6 @@ const Eventos: FunctionComponent = (props: any) => {
     Imagen: '',
     NombreLugar: null,
   }
- 
   const [Eventosdata, setEventosData] = React.useState<any>(initialDataEventos)
   const handleEventosChange = (name: string) => (event: any) => {
     const value = event?.target ? (event.target.files ? event.target.files[0] : event.currentTarget?.value || event.target.value) : event
@@ -58,7 +57,6 @@ const Eventos: FunctionComponent = (props: any) => {
       [name]: value,
     })
   }
-  
   const eventosData = useSelector((state: IState) => state.eventos)
   const theme = minimum
   const [currentUser, setcurrentUser] = React.useState<any>(AuthService.getCurrentUser())
@@ -132,7 +130,7 @@ const Eventos: FunctionComponent = (props: any) => {
   }
 
   // Theme selection
- 
+
   return (
     <React.Fragment>
       <ThemeProvider theme={aptugotheme}>
@@ -278,23 +276,16 @@ const Eventos: FunctionComponent = (props: any) => {
                       />
 
                       <TextField
+                        className={'field_Fecha'}
+                        margin="dense"
                         label="Fecha"
-                        type="datetime-local"
+                        type="date"
                         fullWidth
-                        step="900"
-                        value={
-                          Eventosdata.Fecha
-                            ? new Date(
-                                new Date(Eventosdata.Fecha).setMinutes(new Date(Eventosdata.Fecha).getMinutes() - new Date().getTimezoneOffset())
-                              )
-                                .toISOString()
-                                .slice(0, 16)
-                            : ''
-                        }
+                        InputLabelProps={{ shrink: true }}
+                        value={Eventosdata.Fecha?.slice(0, 10) || ''}
                         onChange={handleEventosChange('Fecha')}
-                        InputLabelProps={{
-                          shrink: true,
-                        }}
+                        error={eventosData?.errField === 'Fecha'}
+                        helperText={eventosData?.errField === 'Fecha' && eventosData.errMessage}
                       />
 
                       <TextField
@@ -348,7 +339,7 @@ const Eventos: FunctionComponent = (props: any) => {
                     >
                       <Field value={(fieldData: any) => fieldData.Nombre} />
 
-                      <Field value={(fieldData: any) => moment(fieldData.Fecha).format('MM/DD/YYYY HH:mm')} />
+                      <Field value={(fieldData: any) => moment(fieldData.Fecha).utc().format('MM/DD/YYYY HH:mm')} />
 
                       <Field value={(fieldData: any) => fieldData.Hora} />
 

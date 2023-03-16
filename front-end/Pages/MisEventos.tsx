@@ -4,12 +4,14 @@ import baseClasses from './layout.module.scss'
 import DeleteIcon from '@mui/icons-material/Delete'
 import HomeIcon from '@mui/icons-material/Home'
 import SettingsIcon from '@mui/icons-material/Settings'
+import Button from '@mui/material/Button'
 import Card from '@mui/material/Card'
 import CardActions from '@mui/material/CardActions'
 import CardContent from '@mui/material/CardContent'
 import CardHeader from '@mui/material/CardHeader'
 import Container from '@mui/material/Container'
 import IconButton from '@mui/material/IconButton'
+import Typography from '@mui/material/Typography'
 import axios from 'axios'
 import { NavLink } from 'react-router-dom'
 import minimum from '../components/Themes/minimum.module.scss'
@@ -99,37 +101,54 @@ const MisEventos: FunctionComponent = (props: any) => {
             </div>
           </div>
 
-          <div title="Lista de Eventos">
-            {misEventos.map((evento, index) => {
-              return (
-                <React.Fragment key={index}>
-                  <a href={`/evento/${evento._id}`}>
-                    <Card sx={{ height: 'fit-content', maxWidth: '300px' }}>
-                      <CardHeader title={evento.Nombre} subheader={evento.NombreLugar.Lugar}></CardHeader>
+          {misEventos.length > 0 && (
+            <div title="Lista de Eventos">
+              {misEventos.map((evento, index) => {
+                return (
+                  <React.Fragment key={index}>
+                    <a href={`/evento/${evento._id}`}>
+                      <Card sx={{ height: 'fit-content', maxWidth: '300px' }}>
+                        <CardHeader title={evento.Nombre} subheader={evento.NombreLugar.Lugar}></CardHeader>
 
-                      <CardContent>
-                        <picture>
-                          <img src={`/img/${evento.Imagen}`} alt={`/img/${evento.Imagen}`} width="270" height="270" />
-                        </picture>
-
-                        <div title="Fecha y Hora">{moment(evento.Fecha).format('DD-MM-yyyy')}</div>
-
-                        <div title="Lugar de Evento">
-                          {evento.NombreLugar.Lugar}
-
+                        <CardContent>
                           <picture>
-                            <img src={`/img/${evento.NombreLugar.ProfilePic}`} alt={`/img/${evento.NombreLugar.ProfilePic}`} width="30" height="30" />
+                            <img src={`/img/${evento.Imagen}`} alt={`/img/${evento.Imagen}`} width="270" height="270" />
                           </picture>
-                        </div>
-                      </CardContent>
 
-                      <CardActions></CardActions>
-                    </Card>
-                  </a>
-                </React.Fragment>
-              )
-            })}
-          </div>
+                          <div title="Fecha y Hora">{moment(evento.Fecha).format('DD-MM-yyyy')}</div>
+
+                          <div title="Lugar de Evento">
+                            {evento.NombreLugar.Lugar}
+
+                            <picture>
+                              <img
+                                src={`/img/${evento.NombreLugar.ProfilePic}`}
+                                alt={`/img/${evento.NombreLugar.ProfilePic}`}
+                                width="30"
+                                height="30"
+                              />
+                            </picture>
+                          </div>
+                        </CardContent>
+
+                        <CardActions></CardActions>
+                      </Card>
+                    </a>
+                  </React.Fragment>
+                )
+              })}
+            </div>
+          )}
+
+          {misEventos.length < 1 && (
+            <React.Fragment>
+              <Typography variant="h3">No tenes eventos creados</Typography>
+            </React.Fragment>
+          )}
+
+          <NavLink to="/crear-evento">
+            <Button color="primary">Crear Evento</Button>
+          </NavLink>
 
           <div title="Footer">Copyright CHACATICKET</div>
         </Container>
