@@ -23,11 +23,14 @@ const DetallesdeEvento: FunctionComponent = (props: any) => {
   const theme = minimum
   const [currentUser, setcurrentUser] = React.useState<any>(AuthService.getCurrentUser())
   const [profileMenuAnchor, setprofileMenuAnchor] = React.useState<any>(null)
+  const [precioZona, setprecioZona] = React.useState<any>('')
+  const [nombreZona, setnombreZona] = React.useState<any>('')
   const [editar, seteditar] = React.useState<any>('')
   const [nuevoNombreZona, setnuevoNombreZona] = React.useState<any>('')
   const [nuevaFechaEvento, setnuevaFechaEvento] = React.useState<any>('')
   const [nuevoNombreEvento, setnuevoNombreEvento] = React.useState<any>('')
   const [zonas, setzonas] = React.useState<any>([])
+  const [hora, sethora] = React.useState<any>('')
   const [fecha, setfecha] = React.useState<any>([])
   const [nombreLugar, setnombreLugar] = React.useState<any>([])
   const [evento, setevento] = React.useState<any>([])
@@ -50,6 +53,8 @@ const DetallesdeEvento: FunctionComponent = (props: any) => {
         setfecha(result.data.docs[0].Fecha)
 
         setnuevaFechaEvento(result.data.docs[0].Fecha)
+
+        sethora(result.data.docs[0].Hora)
 
         setzonas(result.data.docs[0].Zonas)
       })
@@ -84,6 +89,21 @@ const DetallesdeEvento: FunctionComponent = (props: any) => {
       .then((result) => {})
 
     axios.get(`http://localhost:4567/api/Eventos/${eventoId}`).then((result) => {
+      setzonas(result.data.docs[0].Zonas)
+    })
+  }
+
+  const crearZona = async () => {
+    await axios
+      .post(`http://localhost:4567/api/Zonas`, {
+        Nombre: nombreZona,
+        Precio: precioZona,
+        NombreEvento: eventoId,
+      })
+      .then((response) => {
+        console.log(response.data)
+      })
+    await axios.get(`http://localhost:4567/api/Eventos/${eventoId}`).then((result) => {
       setzonas(result.data.docs[0].Zonas)
     })
   }
@@ -135,7 +155,7 @@ const DetallesdeEvento: FunctionComponent = (props: any) => {
                   <img src={`/img/${evento.Imagen}`} alt={`/img/${evento.Imagen}`} width="270" height="270" />
                 </picture>
 
-                <div title="Fecha y Hora">
+                <div title="Fecha">
                   <Moment interval={0} format="DD-MM-yyyy" locale="es-AR">
                     {fecha}
                   </Moment>
@@ -174,6 +194,8 @@ const DetallesdeEvento: FunctionComponent = (props: any) => {
                     </React.Fragment>
                   )}
                 </div>
+
+                <div title="Hora">{hora}</div>
 
                 <div title="Lugar de Evento">
                   {nombreLugar.NombreLugar}
@@ -233,6 +255,31 @@ const DetallesdeEvento: FunctionComponent = (props: any) => {
                 </React.Fragment>
               )
             })}
+            <div title="Agregar Zona">
+              <TextField
+                variant="standard"
+                label="Nombre de la Zona"
+                type="text"
+                value={nombreZona}
+                onChange={(e) => {
+                  setnombreZona(e.target.value)
+                }}
+              />
+
+              <TextField
+                variant="standard"
+                label="Precio de la Zona"
+                type="number"
+                value={precioZona}
+                onChange={(e) => {
+                  setprecioZona(e.target.value)
+                }}
+              />
+
+              <Button color="primary" onClickCapture={crearZona}>
+                Crear Zona
+              </Button>
+            </div>
           </div>
 
           <div title="Ubicaciones"></div>

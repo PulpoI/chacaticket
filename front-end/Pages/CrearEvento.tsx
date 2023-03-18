@@ -16,7 +16,6 @@ const CrearEvento: FunctionComponent = (props: any) => {
   const [currentUser, setcurrentUser] = React.useState<any>(AuthService.getCurrentUser())
   const [profileMenuAnchor, setprofileMenuAnchor] = React.useState<any>(null)
   const [imagenEvento, setimagenEvento] = React.useState<any>([])
-  const [imagenes, setimagenes] = React.useState<any>('')
   const [horaEvento, sethoraEvento] = React.useState<any>('21:00')
   const [fechaEvento, setfechaEvento] = React.useState<any>(new Date())
   const [nombreEvento, setnombreEvento] = React.useState<any>('')

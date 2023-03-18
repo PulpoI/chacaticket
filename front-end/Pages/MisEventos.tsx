@@ -115,7 +115,9 @@ const MisEventos: FunctionComponent = (props: any) => {
                             <img src={`/img/${evento.Imagen}`} alt={`/img/${evento.Imagen}`} width="270" height="270" />
                           </picture>
 
-                          <div title="Fecha y Hora">{moment(evento.Fecha).format('DD-MM-yyyy')}</div>
+                          <div title="Fecha">{moment(evento.Fecha).format('DD-MM-yyyy')}</div>
+
+                          <div title="Hora">{evento.Hora}</div>
 
                           <div title="Lugar de Evento">
                             {evento.NombreLugar.Lugar}
