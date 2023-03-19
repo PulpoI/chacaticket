@@ -41,7 +41,7 @@ import AuthService from '../services/auth.service'
 const Ubicaciones: FunctionComponent = (props: any) => {
   const classes = baseClasses
   const initialDataUbicaciones = {
-    Ubicacion: '',
+    Nombre: '',
     NombreZona: null,
   }
   const [Ubicacionesdata, setUbicacionesData] = React.useState<any>(initialDataUbicaciones)
@@ -259,15 +259,15 @@ const Ubicaciones: FunctionComponent = (props: any) => {
                     >
                       <TextField
                         margin="dense"
-                        label="Ubicacion"
+                        label="Nombre"
                         type="text"
                         fullWidth
-                        className={'field_Ubicacion'}
+                        className={'field_Nombre'}
                         variant="standard"
-                        value={Ubicacionesdata.Ubicacion || ''}
-                        onChange={handleUbicacionesChange('Ubicacion')}
-                        error={ubicacionesData?.errField === 'Ubicacion'}
-                        helperText={ubicacionesData?.errField === 'Ubicacion' && ubicacionesData.errMessage}
+                        value={Ubicacionesdata.Nombre || ''}
+                        onChange={handleUbicacionesChange('Nombre')}
+                        error={ubicacionesData?.errField === 'Nombre'}
+                        helperText={ubicacionesData?.errField === 'Nombre' && ubicacionesData.errMessage}
                       />
 
                       <Autocomplete
@@ -290,7 +290,7 @@ const Ubicaciones: FunctionComponent = (props: any) => {
 
                   <div title="Body">
                     <Table
-                      tableHead={['Ubicacion', 'NombreZona', 'Actions']}
+                      tableHead={['Nombre', 'NombreZona', 'Actions']}
                       tableData={ubicacionesData.foundubicaciones.length ? ubicacionesData.foundubicaciones : (ubicacionesData.ubicaciones as any)}
                       orderBy={tableloadoptions.sort.field}
                       order={tableloadoptions.sort.method}
@@ -304,7 +304,7 @@ const Ubicaciones: FunctionComponent = (props: any) => {
                         })
                       }}
                     >
-                      <Field value={(fieldData: any) => fieldData.Ubicacion} />
+                      <Field value={(fieldData: any) => fieldData.Nombre} />
 
                       <Field value={(fieldData: any) => (fieldData.NombreZona ? fieldData.NombreZona.Nombre : '')} />
                       <div className={classes.actionsArea}>

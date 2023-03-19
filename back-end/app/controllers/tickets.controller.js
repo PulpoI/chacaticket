@@ -12,22 +12,7 @@ exports.create = async (options) => {
 
   if (typeof data.NombrePersona !== 'undefined') updatedData['NombrePersona'] = data.NombrePersona
 
-  updatedData['NombreUbicacion'] = {}
-  try {
-    const Ubicaciones = require('../models/ubicaciones.model.js')
-    let ReceivedNombreUbicacion = typeof data.NombreUbicacion === 'string' ? JSON.parse(data.NombreUbicacion) : data.NombreUbicacion
-    NombreUbicacioninfo = Array.isArray(ReceivedNombreUbicacion) ? ReceivedNombreUbicacion[0] : ReceivedNombreUbicacion
-    if (!NombreUbicacioninfo._id) {
-      const NombreUbicacionID = require('mongoose').Types.ObjectId()
-      const Ubicacion = new Ubicaciones({ ...NombreUbicacioninfo, _id: NombreUbicacionID })
-      Ubicacion.save()
-      updatedData['NombreUbicacion'] = NombreUbicacionID
-    } else {
-      updatedData['NombreUbicacion'] = NombreUbicacioninfo._id
-    }
-  } catch (e) {
-    updatedData['NombreUbicacion'] = data.NombreUbicacion
-  }
+  if (typeof data.NombreUbicacion !== 'undefined') updatedData['NombreUbicacion'] = data.NombreUbicacion
 
   // Create a Ticket
   const Ticket = new Tickets(updatedData)
@@ -54,22 +39,7 @@ exports.createAsPromise = (options) => {
 
     if (typeof data.NombrePersona !== 'undefined') updatedData['NombrePersona'] = data.NombrePersona
 
-    updatedData['NombreUbicacion'] = {}
-    try {
-      const Ubicaciones = require('../models/ubicaciones.model.js')
-      let ReceivedNombreUbicacion = typeof data.NombreUbicacion === 'string' ? JSON.parse(data.NombreUbicacion) : data.NombreUbicacion
-      NombreUbicacioninfo = Array.isArray(ReceivedNombreUbicacion) ? ReceivedNombreUbicacion[0] : ReceivedNombreUbicacion
-      if (!NombreUbicacioninfo._id) {
-        const NombreUbicacionID = require('mongoose').Types.ObjectId()
-        const Ubicacion = new Ubicaciones({ ...NombreUbicacioninfo, _id: NombreUbicacionID })
-        Ubicacion.save()
-        updatedData['NombreUbicacion'] = NombreUbicacionID
-      } else {
-        updatedData['NombreUbicacion'] = NombreUbicacioninfo._id
-      }
-    } catch (e) {
-      updatedData['NombreUbicacion'] = data.NombreUbicacion
-    }
+    if (typeof data.NombreUbicacion !== 'undefined') updatedData['NombreUbicacion'] = data.NombreUbicacion
 
     // Create a Ticket
     const Ticket = new Tickets(updatedData)
@@ -107,14 +77,6 @@ exports.findAll = (options) => {
   Tickets.find(findString)
     .sort(query.sort && { [query.sort.field]: query.sort.method === 'desc' ? -1 : 1 })
 
-    .populate(
-      (query.populate === 'true' || query.populate?.indexOf('Ubicaciones') > -1) && {
-        strictPopulate: false,
-        model: 'Ubicaciones',
-        path: 'NombreUbicacion',
-        populate: [{ strictPopulate: false, model: 'Zonas', path: 'NombreZona' }],
-      }
-    )
     .then((tickets) => {
       options.res.json(paginate.paginate(tickets, { page: query.page, limit: query.limit || 10 }))
     })
@@ -158,14 +120,6 @@ exports.find = (options) => {
     Tickets.find(findString)
       .sort(query.sort && { [query.sort.field]: query.sort.method === 'desc' ? -1 : 1 })
 
-      .populate(
-        (query.populate === 'true' || query.populate?.indexOf('Ubicaciones') > -1) && {
-          strictPopulate: false,
-          model: 'Ubicaciones',
-          path: 'NombreUbicacion',
-          populate: [{ strictPopulate: false, model: 'Zonas', path: 'NombreZona' }],
-        }
-      )
       .then((ticket) => {
         resolve(paginate.paginate(ticket, { page: query.page, limit: query.limit || 10 }))
       })
@@ -184,14 +138,6 @@ exports.findOne = (options) => {
     const id = options.req ? options.req.params.ID : options.ID
     Tickets.findById(id)
 
-      .populate(
-        (query.populate === 'true' || query.populate?.indexOf('Ubicaciones') > -1) && {
-          strictPopulate: false,
-          model: 'Ubicaciones',
-          path: 'NombreUbicacion',
-          populate: [{ strictPopulate: false, model: 'Zonas', path: 'NombreZona' }],
-        }
-      )
       .then((ticket) => {
         if (!ticket) {
           return options.res.status(404).send({
@@ -224,35 +170,12 @@ exports.update = (options) => {
 
     if (typeof data.NombrePersona !== 'undefined') updatedData['NombrePersona'] = data.NombrePersona
 
-    updatedData['NombreUbicacion'] = {}
-    try {
-      const Ubicaciones = require('../models/ubicaciones.model.js')
-      let ReceivedNombreUbicacion = typeof data.NombreUbicacion === 'string' ? JSON.parse(data.NombreUbicacion) : data.NombreUbicacion
-      NombreUbicacioninfo = Array.isArray(ReceivedNombreUbicacion) ? ReceivedNombreUbicacion[0] : ReceivedNombreUbicacion
-      if (!NombreUbicacioninfo._id) {
-        const NombreUbicacionID = require('mongoose').Types.ObjectId()
-        const Ubicacion = new Ubicaciones({ ...NombreUbicacioninfo, _id: NombreUbicacionID })
-        Ubicacion.save()
-        updatedData['NombreUbicacion'] = NombreUbicacionID
-      } else {
-        updatedData['NombreUbicacion'] = NombreUbicacioninfo._id
-      }
-    } catch (e) {
-      updatedData['NombreUbicacion'] = data.NombreUbicacion
-    }
+    if (typeof data.NombreUbicacion !== 'undefined') updatedData['NombreUbicacion'] = data.NombreUbicacion
 
     // Find Ticket and update it with the request body
     const query = { populate: 'true' }
     Tickets.findByIdAndUpdate(id, updatedData, { new: true })
 
-      .populate(
-        (query.populate === 'true' || query.populate?.indexOf('Ubicaciones') > -1) && {
-          strictPopulate: false,
-          model: 'Ubicaciones',
-          path: 'NombreUbicacion',
-          populate: [{ strictPopulate: false, model: 'Zonas', path: 'NombreZona' }],
-        }
-      )
       .then((result) => {
         resolve(result)
       })

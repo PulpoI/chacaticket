@@ -3,9 +3,8 @@ const mongoosePaginate = require('mongoose-paginate-v2')
 
 const UbicacionesSchema = mongoose.Schema(
   {
-    Ubicacion: {
+    Nombre: {
       type: String,
-      unique: true,
     },
 
     NombreZona: {
@@ -20,17 +19,9 @@ const UbicacionesSchema = mongoose.Schema(
   }
 )
 
-UbicacionesSchema.virtual('Tickets', {
-  ref: 'Tickets',
-  localField: '_id',
-  foreignField: 'NombreUbicacion',
-  justOne: true,
-  type: '',
-})
-
 UbicacionesSchema.plugin(mongoosePaginate)
 UbicacionesSchema.index({
-  Ubicacion: 'text',
+  Nombre: 'text',
   NombreZona: 'text',
 })
 

@@ -7,7 +7,9 @@ const TicketsSchema = mongoose.Schema(
     NombrePersona: {
       type: String,
     },
-    NombreUbicacion: mongoose.Schema.Types.ObjectId,
+    NombreUbicacion: {
+      type: String,
+    },
   },
   {
     timestamps: true,

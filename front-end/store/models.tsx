@@ -26,10 +26,8 @@ export interface IUbicacionesItem {
   _id?: String
   createdAt: Date
 
-  Ubicacion: string
+  Nombre: string
   NombreZona: IZonasItem
-  // Ubicaciones - Tickets - NombreUbicacion - Ubicaciones - Ubicacion
-  Tickets: ITicketsItem[]
 }
 
 export interface IpaginatedUbicaciones {
@@ -79,7 +77,8 @@ export interface ITicketsItem {
   FechaPago: Date
 
   NombrePersona: string
-  NombreUbicacion: IUbicacionesItem
+
+  NombreUbicacion: string
 }
 
 export interface IpaginatedTickets {

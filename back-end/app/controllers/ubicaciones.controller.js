@@ -8,9 +8,7 @@ exports.create = async (options) => {
   const data = options.req ? options.req.body : options.data
   const updatedData = {}
 
-  // unique validation
-
-  if (typeof data.Ubicacion !== 'undefined') updatedData['Ubicacion'] = data.Ubicacion
+  if (typeof data.Nombre !== 'undefined') updatedData['Nombre'] = data.Nombre
 
   if (data.NombreZona === 'null') data.NombreZona = null
   updatedData['NombreZona'] = {}
@@ -52,9 +50,7 @@ exports.createAsPromise = (options) => {
     const updatedData = {}
     if (data._id) updatedData._id = data._id
 
-    // unique validation
-
-    if (typeof data.Ubicacion !== 'undefined') updatedData['Ubicacion'] = data.Ubicacion
+    if (typeof data.Nombre !== 'undefined') updatedData['Nombre'] = data.Nombre
 
     if (data.NombreZona === 'null') data.NombreZona = null
     updatedData['NombreZona'] = {}
@@ -112,13 +108,6 @@ exports.findAll = (options) => {
     .sort(query.sort && { [query.sort.field]: query.sort.method === 'desc' ? -1 : 1 })
 
     .populate(
-      (query.populate === 'true' || query.populate?.indexOf('Tickets') > -1) && {
-        strictPopulate: false,
-        path: 'Tickets',
-      }
-    )
-
-    .populate(
       (query.populate === 'true' || query.populate?.indexOf('Zonas') > -1) && {
         strictPopulate: false,
         model: 'Zonas',
@@ -170,13 +159,6 @@ exports.find = (options) => {
       .sort(query.sort && { [query.sort.field]: query.sort.method === 'desc' ? -1 : 1 })
 
       .populate(
-        (query.populate === 'true' || query.populate?.indexOf('Tickets') > -1) && {
-          strictPopulate: false,
-          path: 'Tickets',
-        }
-      )
-
-      .populate(
         (query.populate === 'true' || query.populate?.indexOf('Zonas') > -1) && {
           strictPopulate: false,
           model: 'Zonas',
@@ -201,13 +183,6 @@ exports.findOne = (options) => {
     const query = { populate: 'true' }
     const id = options.req ? options.req.params.ID : options.ID
     Ubicaciones.findById(id)
-
-      .populate(
-        (query.populate === 'true' || query.populate?.indexOf('Tickets') > -1) && {
-          strictPopulate: false,
-          path: 'Tickets',
-        }
-      )
 
       .populate(
         (query.populate === 'true' || query.populate?.indexOf('Zonas') > -1) && {
@@ -245,7 +220,7 @@ exports.update = (options) => {
     const data = options.req ? options.req.body : options.data
     const updatedData = {}
 
-    if (typeof data.Ubicacion !== 'undefined') updatedData['Ubicacion'] = data.Ubicacion
+    if (typeof data.Nombre !== 'undefined') updatedData['Nombre'] = data.Nombre
 
     if (data.NombreZona === 'null') data.NombreZona = null
     updatedData['NombreZona'] = {}
@@ -269,13 +244,6 @@ exports.update = (options) => {
     // Find Ubicacion and update it with the request body
     const query = { populate: 'true' }
     Ubicaciones.findByIdAndUpdate(id, updatedData, { new: true })
-
-      .populate(
-        (query.populate === 'true' || query.populate?.indexOf('Tickets') > -1) && {
-          strictPopulate: false,
-          path: 'Tickets',
-        }
-      )
 
       .populate(
         (query.populate === 'true' || query.populate?.indexOf('Zonas') > -1) && {

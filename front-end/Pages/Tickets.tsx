@@ -16,11 +16,9 @@ import { createTheme, ThemeProvider } from '@mui/material/styles'
 import TextField from '@mui/material/TextField'
 import Toolbar from '@mui/material/Toolbar'
 import Typography from '@mui/material/Typography'
-import axios from 'axios'
 import moment from 'moment'
 import { useDispatch, useSelector } from 'react-redux'
 import { NavLink } from 'react-router-dom'
-import Autocomplete from '../components/Autocomplete'
 import AddDialog from '../components/Dialog/Dialog'
 import Sidebar from '../components/Sidebar/Sidebar'
 import Field from '../components/Table/Field'
@@ -44,7 +42,7 @@ const Tickets: FunctionComponent = (props: any) => {
   const initialDataTickets = {
     FechaPago: '',
     NombrePersona: '',
-    NombreUbicacion: [],
+    NombreUbicacion: '',
   }
   const [Ticketsdata, setTicketsData] = React.useState<any>(initialDataTickets)
   const handleTicketsChange = (name: string) => (event: any) => {
@@ -88,24 +86,6 @@ const Tickets: FunctionComponent = (props: any) => {
   const [dialogTicketsAction, setdialogTicketsAction] = React.useState<'add' | 'edit' | 'delete' | ''>('')
   const LocalAddDialog = AddDialog
 
-  const ubicacionesAutocompleteData = useSelector((state: IState) => state.ubicaciones)
-  const [NombreUbicacionOptions, setNombreUbicacionOptions] = React.useState<{ label: String; value: String }[]>([])
-  const typeInSearchNombreUbicacionUbicaciones = (typedIn) => {
-    const searchOptions = { searchString: typedIn, searchField: 'Ubicacion', page: 1, limit: 10 }
-    axios.get('http://127.0.0.1:4567/api/ubicaciones/search/', { params: searchOptions }).then((result) => {
-      setNombreUbicacionOptions(
-        result.data.docs.map((ubicacion) => {
-          return { label: ubicacion.Ubicacion, value: ubicacion._id }
-        })
-      )
-    })
-  }
-  const [NombreUbicacionValue, setNombreUbicacionValue] = React.useState(null)
-  React.useEffect(() => {
-    if (!Ticketsdata.NombreUbicacion) return undefined
-    const asArray = Array.isArray(Ticketsdata.NombreUbicacion) ? Ticketsdata.NombreUbicacion : [Ticketsdata.NombreUbicacion]
-    setNombreUbicacionValue(asArray.map((item) => ({ label: item.Ubicacion, value: item._id })))
-  }, [Ticketsdata.NombreUbicacion])
   const [tableloadoptions, settableloadoptions] = React.useState<any>({
     page: 1,
     populate: true,
@@ -294,20 +274,17 @@ const Tickets: FunctionComponent = (props: any) => {
                         helperText={ticketsData?.errField === 'NombrePersona' && ticketsData.errMessage}
                       />
 
-                      <Autocomplete
-                        value={NombreUbicacionValue}
-                        onType={typeInSearchNombreUbicacionUbicaciones}
-                        onChange={(newValue) =>
-                          handleTicketsChange('NombreUbicacion')(
-                            newValue?.length ? newValue.map((item) => ({ _id: item.value !== 'new' ? item.value : null, Ubicacion: item.label })) : []
-                          )
-                        }
-                        loading={ubicacionesAutocompleteData.loadingStatus === 'loading'}
-                        options={NombreUbicacionOptions}
-                        label="NombreUbicacion"
-                        fullWidth
-                        variant="standard"
+                      <TextField
                         margin="dense"
+                        label="NombreUbicacion"
+                        type="text"
+                        fullWidth
+                        className={'field_NombreUbicacion'}
+                        variant="standard"
+                        value={Ticketsdata.NombreUbicacion || ''}
+                        onChange={handleTicketsChange('NombreUbicacion')}
+                        error={ticketsData?.errField === 'NombreUbicacion'}
+                        helperText={ticketsData?.errField === 'NombreUbicacion' && ticketsData.errMessage}
                       />
                     </LocalAddDialog>
                   </div>
@@ -332,7 +309,7 @@ const Tickets: FunctionComponent = (props: any) => {
 
                       <Field value={(fieldData: any) => fieldData.NombrePersona} />
 
-                      <Field value={(fieldData: any) => (fieldData.NombreUbicacion ? fieldData.NombreUbicacion.Ubicacion : '')} />
+                      <Field value={(fieldData: any) => fieldData.NombreUbicacion} />
                       <div className={classes.actionsArea}>
                         <IconButton
                           aria-label="edit"
