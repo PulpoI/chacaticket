@@ -20,13 +20,6 @@ const ZonasSchema = mongoose.Schema(
   }
 )
 
-ZonasSchema.virtual('', {
-  ref: '',
-  localField: '_id',
-  foreignField: 'NombreZona',
-  justOne: false,
-  type: '',
-})
 ZonasSchema.virtual('Tickets', {
   ref: 'Tickets',
   localField: '_id',

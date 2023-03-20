@@ -7,8 +7,6 @@ import CardActions from '@mui/material/CardActions'
 import CardContent from '@mui/material/CardContent'
 import CardHeader from '@mui/material/CardHeader'
 import Container from '@mui/material/Container'
-import List from '@mui/material/List'
-import ListItemText from '@mui/material/ListItemText'
 import TextField from '@mui/material/TextField'
 import Typography from '@mui/material/Typography'
 import axios from 'axios'
@@ -28,7 +26,9 @@ const DetallesdeEvento: FunctionComponent = (props: any) => {
   const [ticketsZona, setticketsZona] = React.useState<any>(0)
   const [precioZona, setprecioZona] = React.useState<any>('')
   const [nombreZona, setnombreZona] = React.useState<any>('')
+  const [editarT, seteditarT] = React.useState<any>('')
   const [editar, seteditar] = React.useState<any>('')
+  const [nuevaCantidadTickets, setnuevaCantidadTickets] = React.useState<any>('')
   const [nuevoPrecioZona, setnuevoPrecioZona] = React.useState<any>('')
   const [nuevoNombreZona, setnuevoNombreZona] = React.useState<any>('')
   const [nuevaHoraEvento, setnuevaHoraEvento] = React.useState<any>('21:00')
@@ -40,8 +40,6 @@ const DetallesdeEvento: FunctionComponent = (props: any) => {
   const [fecha, setfecha] = React.useState<any>([])
   const [nombreLugar, setnombreLugar] = React.useState<any>([])
   const [evento, setevento] = React.useState<any>([])
-
-  
 
   if (!authHeaders()) {
     props.history.push('/Login')
@@ -67,7 +65,6 @@ const DetallesdeEvento: FunctionComponent = (props: any) => {
         setzonas(result.data.docs[0].Zonas)
       })
     }
-    
   }, [currentUser])
 
   const guardarNombreEvento = () => {
@@ -122,6 +119,31 @@ const DetallesdeEvento: FunctionComponent = (props: any) => {
     })
   }
 
+  const editarTickets = async (zonaId) => {
+    let zonaTemp = []
+    await axios.get(`http://localhost:4567/api/Zonas/${zonaId}`).then((result) => {
+      zonaTemp = result.data.docs[0].Tickets
+      zonaTemp.map((ticket) => {
+        if (ticket.NombreZona === zonaId) {
+          axios.delete(`http://localhost:4567/api/Tickets/${ticket._id}`)
+        }
+      })
+    })
+    let cantidad = nuevaCantidadTickets
+    while (cantidad !== 0) {
+      await axios.post(`http://localhost:4567/api/Tickets`, {
+        NombreUbicacion: cantidad,
+        NombreZona: zonaId,
+        FechaPago: '',
+        Usado: false,
+      })
+      cantidad -= 1
+    }
+    await axios.get(`http://localhost:4567/api/Eventos/${eventoId}`).then((result) => {
+      setzonas(result.data.docs[0].Zonas)
+    })
+  }
+
   const crearZona = async () => {
     await axios
       .post(`http://localhost:4567/api/Zonas`, {
@@ -143,6 +165,7 @@ const DetallesdeEvento: FunctionComponent = (props: any) => {
         NombreUbicacion: cantidad,
         NombreZona: zonaId,
         FechaPago: '',
+        Usado: false,
       })
       cantidad -= 1
     }
@@ -159,7 +182,6 @@ const DetallesdeEvento: FunctionComponent = (props: any) => {
     )
   }
 
-  console.log(zonas)
   return (
     <React.Fragment>
       <div className={classes.mainPanel}>
@@ -335,49 +357,79 @@ const DetallesdeEvento: FunctionComponent = (props: any) => {
                 <React.Fragment key={index}>
                   <Typography variant="h5">Zona: {zona.Nombre}</Typography>
 
-                  <Typography variant="h5">Precio: {zona.Precio}</Typography>
+                  <Typography variant="h5">Precio: ${zona.Precio}</Typography>
 
-                  <List>
-                    {zona.Tickets.map((ticket, index) => {
-                      return (
-                        <React.Fragment key={index}>
-                          <ListItemText primary={`Ubicacion: ${ticket.NombreUbicacion}`} />
-                        </React.Fragment>
-                      )
-                    })}
-                  </List>
-
-                  <Button
-                    variant="contained"
-                    color="secondary"
-                    onClickCapture={(e) => {
-                      seteditar(zona.Nombre)
-                    }}
-                  >
-                    Agregar Ticket
-                  </Button>
-                  {editar === zona.Nombre && (
+                  {zona.Tickets.length > 0 && (
                     <React.Fragment>
-                      <div title="div">
-                        <TextField
-                          variant="standard"
-                          label="Ingresa la cantidad de Tickets"
-                          type="number"
-                          value={ticketsZona}
-                          onChange={(e) => {
-                            setticketsZona(e.target.value)
-                          }}
-                        />
+                      <Typography variant="h5">Tickets: {zona.Tickets.length}</Typography>
 
-                        <Button
-                          color="primary"
-                          onClickCapture={(e) => {
-                            agregarTickets(zona._id)
-                          }}
-                        >
-                          Agregar Tickets
-                        </Button>
-                      </div>
+                      <Button
+                        color="primary"
+                        onClickCapture={(e) => {
+                          seteditar(zona.Precio)
+                        }}
+                      >
+                        Editar Cantidad de Tickets
+                      </Button>
+                      {editar === zona.Precio && (
+                        <React.Fragment>
+                          <TextField
+                            variant="standard"
+                            type="number"
+                            value={nuevaCantidadTickets}
+                            onChange={(e) => {
+                              setnuevaCantidadTickets(e.target.value)
+                            }}
+                          />
+
+                          <Button
+                            color="primary"
+                            onClickCapture={(e) => {
+                              editarTickets(zona._id)
+                            }}
+                          >
+                            Guardar
+                          </Button>
+                        </React.Fragment>
+                      )}
+                    </React.Fragment>
+                  )}
+
+                  {zona.Tickets.length < 1 && (
+                    <React.Fragment>
+                      <Button
+                        variant="contained"
+                        color="secondary"
+                        onClickCapture={(e) => {
+                          seteditar(zona.Tickets)
+                        }}
+                      >
+                        Agregar Tickets
+                      </Button>
+                      {editar === zona.Tickets && (
+                        <React.Fragment>
+                          <div title="div">
+                            <TextField
+                              variant="standard"
+                              label="Ingresa la cantidad de Tickets"
+                              type="number"
+                              value={ticketsZona}
+                              onChange={(e) => {
+                                setticketsZona(e.target.value)
+                              }}
+                            />
+
+                            <Button
+                              color="primary"
+                              onClickCapture={(e) => {
+                                agregarTickets(zona._id)
+                              }}
+                            >
+                              Agregar Tickets
+                            </Button>
+                          </div>
+                        </React.Fragment>
+                      )}
                     </React.Fragment>
                   )}
 
@@ -385,7 +437,7 @@ const DetallesdeEvento: FunctionComponent = (props: any) => {
                     variant="contained"
                     color="primary"
                     onClickCapture={(e) => {
-                      seteditar(zona.Nombre)
+                      seteditar(zona._id)
                     }}
                   >
                     Editar Zona
@@ -399,7 +451,7 @@ const DetallesdeEvento: FunctionComponent = (props: any) => {
                   >
                     Eliminar Zona
                   </Button>
-                  {editar === zona.Nombre && (
+                  {editar === zona._id && (
                     <React.Fragment>
                       <div title="div">
                         <TextField

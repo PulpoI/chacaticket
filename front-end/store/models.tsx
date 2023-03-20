@@ -61,6 +61,7 @@ export interface ITicketsItem {
 
   EmailPersona: string
   FechaPago: Date
+  Usado: Boolean
 }
 
 export interface IpaginatedTickets {
@@ -92,6 +93,8 @@ export interface IUsersItem {
   Role: String
 
   Lugar: string
+
+  DireccionLugar: string
   // Users - Eventos - NombreLugar - Users - Lugar
   Eventos: IEventosItem[]
 }

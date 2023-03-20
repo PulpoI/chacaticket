@@ -47,6 +47,7 @@ const Users: FunctionComponent = (props: any) => {
     ProfilePic: '',
     Role: '',
     Lugar: '',
+    DireccionLugar: '',
   }
   const [Usersdata, setUsersData] = React.useState<any>(initialDataUsers)
   const handleUsersChange = (name: string) => (event: any) => {
@@ -328,12 +329,25 @@ const Users: FunctionComponent = (props: any) => {
                         error={usersData?.errField === 'Lugar'}
                         helperText={usersData?.errField === 'Lugar' && usersData.errMessage}
                       />
+
+                      <TextField
+                        margin="dense"
+                        label="DireccionLugar"
+                        type="text"
+                        fullWidth
+                        className={'field_DireccionLugar'}
+                        variant="standard"
+                        value={Usersdata.DireccionLugar || ''}
+                        onChange={handleUsersChange('DireccionLugar')}
+                        error={usersData?.errField === 'DireccionLugar'}
+                        helperText={usersData?.errField === 'DireccionLugar' && usersData.errMessage}
+                      />
                     </LocalAddDialog>
                   </div>
 
                   <div title="Body">
                     <Table
-                      tableHead={['First Name', 'Last Name', 'Email', 'Password', 'Profile Picture', 'Role', 'Lugar', 'Actions']}
+                      tableHead={['First Name', 'Last Name', 'Email', 'Password', 'Profile Picture', 'Role', 'Lugar', 'DireccionLugar', 'Actions']}
                       tableData={usersData.foundusers.length ? usersData.foundusers : (usersData.users as any)}
                       orderBy={tableloadoptions.sort.field}
                       order={tableloadoptions.sort.method}
@@ -360,6 +374,8 @@ const Users: FunctionComponent = (props: any) => {
                       <Field value={(fieldData: any) => fieldData.Role} />
 
                       <Field value={(fieldData: any) => fieldData.Lugar} />
+
+                      <Field value={(fieldData: any) => fieldData.DireccionLugar} />
                       <div className={classes.actionsArea}>
                         <IconButton
                           aria-label="edit"

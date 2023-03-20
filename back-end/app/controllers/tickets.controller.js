@@ -35,6 +35,8 @@ exports.create = async (options) => {
 
   if (typeof data.FechaPago !== 'undefined') updatedData['FechaPago'] = data.FechaPago
 
+  if (typeof data.Usado !== 'undefined') updatedData['Usado'] = data.Usado
+
   // Create a Ticket
   const Ticket = new Tickets(updatedData)
 
@@ -83,6 +85,8 @@ exports.createAsPromise = (options) => {
 
     if (typeof data.FechaPago !== 'undefined') updatedData['FechaPago'] = data.FechaPago
 
+    if (typeof data.Usado !== 'undefined') updatedData['Usado'] = data.Usado
+
     // Create a Ticket
     const Ticket = new Tickets(updatedData)
 
@@ -124,10 +128,7 @@ exports.findAll = (options) => {
         strictPopulate: false,
         model: 'Zonas',
         path: 'NombreZona',
-        populate: [
-          { strictPopulate: false, model: 'Eventos', path: 'NombreEvento' },
-          { strictPopulate: false, model: '', path: '' },
-        ],
+        populate: [{ strictPopulate: false, model: 'Eventos', path: 'NombreEvento' }],
       }
     )
 
@@ -179,10 +180,7 @@ exports.find = (options) => {
           strictPopulate: false,
           model: 'Zonas',
           path: 'NombreZona',
-          populate: [
-            { strictPopulate: false, model: 'Eventos', path: 'NombreEvento' },
-            { strictPopulate: false, model: '', path: '' },
-          ],
+          populate: [{ strictPopulate: false, model: 'Eventos', path: 'NombreEvento' }],
         }
       )
 
@@ -209,10 +207,7 @@ exports.findOne = (options) => {
           strictPopulate: false,
           model: 'Zonas',
           path: 'NombreZona',
-          populate: [
-            { strictPopulate: false, model: 'Eventos', path: 'NombreEvento' },
-            { strictPopulate: false, model: '', path: '' },
-          ],
+          populate: [{ strictPopulate: false, model: 'Eventos', path: 'NombreEvento' }],
         }
       )
 
@@ -271,6 +266,8 @@ exports.update = (options) => {
 
     if (typeof data.FechaPago !== 'undefined') updatedData['FechaPago'] = data.FechaPago
 
+    if (typeof data.Usado !== 'undefined') updatedData['Usado'] = data.Usado
+
     // Find Ticket and update it with the request body
     const query = { populate: 'true' }
     Tickets.findByIdAndUpdate(id, updatedData, { new: true })
@@ -280,10 +277,7 @@ exports.update = (options) => {
           strictPopulate: false,
           model: 'Zonas',
           path: 'NombreZona',
-          populate: [
-            { strictPopulate: false, model: 'Eventos', path: 'NombreEvento' },
-            { strictPopulate: false, model: '', path: '' },
-          ],
+          populate: [{ strictPopulate: false, model: 'Eventos', path: 'NombreEvento' }],
         }
       )
 

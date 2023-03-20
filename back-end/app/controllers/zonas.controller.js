@@ -112,12 +112,6 @@ exports.findAll = (options) => {
     .sort(query.sort && { [query.sort.field]: query.sort.method === 'desc' ? -1 : 1 })
 
     .populate(
-      (query.populate === 'true' || query.populate?.indexOf('') > -1) && {
-        strictPopulate: false,
-        path: '',
-      }
-    )
-    .populate(
       (query.populate === 'true' || query.populate?.indexOf('Tickets') > -1) && {
         strictPopulate: false,
         path: 'Tickets',
@@ -176,12 +170,6 @@ exports.find = (options) => {
       .sort(query.sort && { [query.sort.field]: query.sort.method === 'desc' ? -1 : 1 })
 
       .populate(
-        (query.populate === 'true' || query.populate?.indexOf('') > -1) && {
-          strictPopulate: false,
-          path: '',
-        }
-      )
-      .populate(
         (query.populate === 'true' || query.populate?.indexOf('Tickets') > -1) && {
           strictPopulate: false,
           path: 'Tickets',
@@ -214,12 +202,6 @@ exports.findOne = (options) => {
     const id = options.req ? options.req.params.ID : options.ID
     Zonas.findById(id)
 
-      .populate(
-        (query.populate === 'true' || query.populate?.indexOf('') > -1) && {
-          strictPopulate: false,
-          path: '',
-        }
-      )
       .populate(
         (query.populate === 'true' || query.populate?.indexOf('Tickets') > -1) && {
           strictPopulate: false,
@@ -290,12 +272,6 @@ exports.update = (options) => {
     const query = { populate: 'true' }
     Zonas.findByIdAndUpdate(id, updatedData, { new: true })
 
-      .populate(
-        (query.populate === 'true' || query.populate?.indexOf('') > -1) && {
-          strictPopulate: false,
-          path: '',
-        }
-      )
       .populate(
         (query.populate === 'true' || query.populate?.indexOf('Tickets') > -1) && {
           strictPopulate: false,

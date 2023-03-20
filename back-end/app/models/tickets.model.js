@@ -19,6 +19,7 @@ const TicketsSchema = mongoose.Schema(
       type: String,
     },
     FechaPago: Date,
+    Usado: Boolean,
   },
   {
     timestamps: true,
@@ -33,6 +34,7 @@ TicketsSchema.index({
   NombrePersona: 'text',
   EmailPersona: 'text',
   FechaPago: 'text',
+  Usado: 'text',
 })
 
 const myModel = (module.exports = mongoose.model('Tickets', TicketsSchema, 'tickets'))

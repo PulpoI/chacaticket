@@ -53,6 +53,7 @@ const Register: FunctionComponent = (props: any) => {
     ProfilePic: '',
     Role: '',
     Lugar: '',
+    DireccionLugar: '',
   }
   const [Usersdata, setUsersData] = React.useState<any>(initialDataUsers)
   const handleUsersChange = (name: string) => (event: any) => {

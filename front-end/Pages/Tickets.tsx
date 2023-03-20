@@ -3,9 +3,13 @@ import baseClasses from './layout.module.scss'
 
 import DeleteIcon from '@mui/icons-material/Delete'
 import EditIcon from '@mui/icons-material/Edit'
+import RadioButtonCheckedIcon from '@mui/icons-material/RadioButtonChecked'
+import RadioButtonUncheckedIcon from '@mui/icons-material/RadioButtonUnchecked'
 import AppBar from '@mui/material/AppBar'
+import Checkbox from '@mui/material/Checkbox'
 import green from '@mui/material/colors/green'
 import Container from '@mui/material/Container'
+import FormControlLabel from '@mui/material/FormControlLabel'
 import IconButton from '@mui/material/IconButton'
 import ListItem from '@mui/material/ListItem'
 import ListItemText from '@mui/material/ListItemText'
@@ -29,6 +33,7 @@ import minimum from '../components/Themes/minimum.module.scss'
 import { addTickets, editTickets, loadTickets, removeTicket, searchTickets } from '../store/actions/ticketsActions'
 import { ITicketsItem } from '../store/models'
 import { IState } from '../store/reducers/index'
+export { RadioButtonUncheckedIcon }
 
 const aptugotheme = createTheme({
   palette: {
@@ -47,6 +52,7 @@ const Tickets: FunctionComponent = (props: any) => {
     NombrePersona: '',
     EmailPersona: '',
     FechaPago: '',
+    Usado: false,
   }
   const [Ticketsdata, setTicketsData] = React.useState<any>(initialDataTickets)
   const handleTicketsChange = (name: string) => (event: any) => {
@@ -331,12 +337,23 @@ const Tickets: FunctionComponent = (props: any) => {
                           shrink: true,
                         }}
                       />
+
+                      <FormControlLabel
+                        control={
+                          <Checkbox
+                            checked={Ticketsdata.Usado}
+                            color="primary"
+                            onChange={(e) => handleTicketsChange('Usado')(e.currentTarget.checked)}
+                          />
+                        }
+                        label="Usado"
+                      />
                     </LocalAddDialog>
                   </div>
 
                   <div title="Body">
                     <Table
-                      tableHead={['NombreUbicacion', 'NombreZona', 'NombrePersona', 'EmailPersona', 'FechaPago', 'Actions']}
+                      tableHead={['NombreUbicacion', 'NombreZona', 'NombrePersona', 'EmailPersona', 'FechaPago', 'Usado', 'Actions']}
                       tableData={ticketsData.foundtickets.length ? ticketsData.foundtickets : (ticketsData.tickets as any)}
                       orderBy={tableloadoptions.sort.field}
                       order={tableloadoptions.sort.method}
@@ -359,6 +376,9 @@ const Tickets: FunctionComponent = (props: any) => {
                       <Field value={(fieldData: any) => fieldData.EmailPersona} />
 
                       <Field value={(fieldData: any) => moment(fieldData.FechaPago).format('DD/MM/YYYY HH:mm')} />
+
+                      <Field value={(fieldData: any) => (fieldData.Usado ? <RadioButtonCheckedIcon /> : <RadioButtonUncheckedIcon />)} />
+
                       <div className={classes.actionsArea}>
                         <IconButton
                           aria-label="edit"

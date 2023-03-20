@@ -27,6 +27,8 @@ exports.create = async (options) => {
 
   if (typeof data.Lugar !== 'undefined') updatedData['Lugar'] = data.Lugar
 
+  if (typeof data.DireccionLugar !== 'undefined') updatedData['DireccionLugar'] = data.DireccionLugar
+
   // Create a Usersrecord
   const Usersrecord = new Users(updatedData)
 
@@ -64,6 +66,8 @@ exports.createAsPromise = (options) => {
     if (typeof data.Role !== 'undefined') updatedData['Role'] = data.Role
 
     if (typeof data.Lugar !== 'undefined') updatedData['Lugar'] = data.Lugar
+
+    if (typeof data.DireccionLugar !== 'undefined') updatedData['DireccionLugar'] = data.DireccionLugar
 
     // Create a Usersrecord
     const Usersrecord = new Users(updatedData)
@@ -108,6 +112,7 @@ exports.findAll = (options) => {
         populate: [{ model: 'Zonas', path: 'Zonas', strictPopulate: false }],
       }
     )
+
     .then((users) => {
       options.res.json(paginate.paginate(users, { page: query.page, limit: query.limit || 10 }))
     })
@@ -158,6 +163,7 @@ exports.find = (options) => {
           populate: [{ model: 'Zonas', path: 'Zonas', strictPopulate: false }],
         }
       )
+
       .then((usersrecord) => {
         resolve(paginate.paginate(usersrecord, { page: query.page, limit: query.limit || 10 }))
       })
@@ -183,6 +189,7 @@ exports.findOne = (options) => {
           populate: [{ model: 'Zonas', path: 'Zonas', strictPopulate: false }],
         }
       )
+
       .then((usersrecord) => {
         if (!usersrecord) {
           return options.res.status(404).send({
@@ -228,6 +235,8 @@ exports.update = (options) => {
 
     if (typeof data.Lugar !== 'undefined') updatedData['Lugar'] = data.Lugar
 
+    if (typeof data.DireccionLugar !== 'undefined') updatedData['DireccionLugar'] = data.DireccionLugar
+
     // Find Usersrecord and update it with the request body
     const query = { populate: 'true' }
     Users.findByIdAndUpdate(id, updatedData, { new: true })
@@ -239,6 +248,7 @@ exports.update = (options) => {
           populate: [{ model: 'Zonas', path: 'Zonas', strictPopulate: false }],
         }
       )
+
       .then((result) => {
         resolve(result)
       })

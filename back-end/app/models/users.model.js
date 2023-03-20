@@ -20,6 +20,9 @@ const UsersSchema = mongoose.Schema(
     Lugar: {
       type: String,
     },
+    DireccionLugar: {
+      type: String,
+    },
   },
   {
     timestamps: true,
@@ -44,6 +47,7 @@ UsersSchema.index({
   ProfilePic: 'text',
   Role: 'text',
   Lugar: 'text',
+  DireccionLugar: 'text',
 })
 
 const myModel = (module.exports = mongoose.model('Users', UsersSchema, 'users'))
