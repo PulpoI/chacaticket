@@ -8,11 +8,32 @@ exports.create = async (options) => {
   const data = options.req ? options.req.body : options.data
   const updatedData = {}
 
-  if (typeof data.FechaPago !== 'undefined') updatedData['FechaPago'] = data.FechaPago
+  if (typeof data.NombreUbicacion !== 'undefined') updatedData['NombreUbicacion'] = data.NombreUbicacion
+
+  if (data.NombreZona === 'null') data.NombreZona = null
+  updatedData['NombreZona'] = {}
+  try {
+    const Zonas = require('../models/zonas.model.js')
+    let ReceivedNombreZona = typeof data.NombreZona === 'string' ? JSON.parse(data.NombreZona) : data.NombreZona
+    NombreZonainfo = Array.isArray(ReceivedNombreZona) ? ReceivedNombreZona[0] : ReceivedNombreZona
+
+    if (!NombreZonainfo._id) {
+      const NombreZonaID = require('mongoose').Types.ObjectId()
+      const Zona = new Zonas({ ...NombreZonainfo, _id: NombreZonaID })
+      Zona.save()
+      updatedData['NombreZona'] = NombreZonaID
+    } else {
+      updatedData['NombreZona'] = NombreZonainfo._id
+    }
+  } catch (e) {
+    updatedData['NombreZona'] = data.NombreZona
+  }
 
   if (typeof data.NombrePersona !== 'undefined') updatedData['NombrePersona'] = data.NombrePersona
 
-  if (typeof data.NombreUbicacion !== 'undefined') updatedData['NombreUbicacion'] = data.NombreUbicacion
+  if (typeof data.EmailPersona !== 'undefined') updatedData['EmailPersona'] = data.EmailPersona
+
+  if (typeof data.FechaPago !== 'undefined') updatedData['FechaPago'] = data.FechaPago
 
   // Create a Ticket
   const Ticket = new Tickets(updatedData)
@@ -35,11 +56,32 @@ exports.createAsPromise = (options) => {
     const updatedData = {}
     if (data._id) updatedData._id = data._id
 
-    if (typeof data.FechaPago !== 'undefined') updatedData['FechaPago'] = data.FechaPago
+    if (typeof data.NombreUbicacion !== 'undefined') updatedData['NombreUbicacion'] = data.NombreUbicacion
+
+    if (data.NombreZona === 'null') data.NombreZona = null
+    updatedData['NombreZona'] = {}
+    try {
+      const Zonas = require('../models/zonas.model.js')
+      let ReceivedNombreZona = typeof data.NombreZona === 'string' ? JSON.parse(data.NombreZona) : data.NombreZona
+      NombreZonainfo = Array.isArray(ReceivedNombreZona) ? ReceivedNombreZona[0] : ReceivedNombreZona
+
+      if (!NombreZonainfo._id) {
+        const NombreZonaID = require('mongoose').Types.ObjectId()
+        const Zona = new Zonas({ ...NombreZonainfo, _id: NombreZonaID })
+        Zona.save()
+        updatedData['NombreZona'] = NombreZonaID
+      } else {
+        updatedData['NombreZona'] = NombreZonainfo._id
+      }
+    } catch (e) {
+      updatedData['NombreZona'] = data.NombreZona
+    }
 
     if (typeof data.NombrePersona !== 'undefined') updatedData['NombrePersona'] = data.NombrePersona
 
-    if (typeof data.NombreUbicacion !== 'undefined') updatedData['NombreUbicacion'] = data.NombreUbicacion
+    if (typeof data.EmailPersona !== 'undefined') updatedData['EmailPersona'] = data.EmailPersona
+
+    if (typeof data.FechaPago !== 'undefined') updatedData['FechaPago'] = data.FechaPago
 
     // Create a Ticket
     const Ticket = new Tickets(updatedData)
@@ -76,6 +118,18 @@ exports.findAll = (options) => {
 
   Tickets.find(findString)
     .sort(query.sort && { [query.sort.field]: query.sort.method === 'desc' ? -1 : 1 })
+
+    .populate(
+      (query.populate === 'true' || query.populate?.indexOf('Zonas') > -1) && {
+        strictPopulate: false,
+        model: 'Zonas',
+        path: 'NombreZona',
+        populate: [
+          { strictPopulate: false, model: 'Eventos', path: 'NombreEvento' },
+          { strictPopulate: false, model: '', path: '' },
+        ],
+      }
+    )
 
     .then((tickets) => {
       options.res.json(paginate.paginate(tickets, { page: query.page, limit: query.limit || 10 }))
@@ -120,6 +174,18 @@ exports.find = (options) => {
     Tickets.find(findString)
       .sort(query.sort && { [query.sort.field]: query.sort.method === 'desc' ? -1 : 1 })
 
+      .populate(
+        (query.populate === 'true' || query.populate?.indexOf('Zonas') > -1) && {
+          strictPopulate: false,
+          model: 'Zonas',
+          path: 'NombreZona',
+          populate: [
+            { strictPopulate: false, model: 'Eventos', path: 'NombreEvento' },
+            { strictPopulate: false, model: '', path: '' },
+          ],
+        }
+      )
+
       .then((ticket) => {
         resolve(paginate.paginate(ticket, { page: query.page, limit: query.limit || 10 }))
       })
@@ -137,6 +203,18 @@ exports.findOne = (options) => {
     const query = { populate: 'true' }
     const id = options.req ? options.req.params.ID : options.ID
     Tickets.findById(id)
+
+      .populate(
+        (query.populate === 'true' || query.populate?.indexOf('Zonas') > -1) && {
+          strictPopulate: false,
+          model: 'Zonas',
+          path: 'NombreZona',
+          populate: [
+            { strictPopulate: false, model: 'Eventos', path: 'NombreEvento' },
+            { strictPopulate: false, model: '', path: '' },
+          ],
+        }
+      )
 
       .then((ticket) => {
         if (!ticket) {
@@ -166,15 +244,48 @@ exports.update = (options) => {
     const data = options.req ? options.req.body : options.data
     const updatedData = {}
 
-    if (typeof data.FechaPago !== 'undefined') updatedData['FechaPago'] = data.FechaPago
+    if (typeof data.NombreUbicacion !== 'undefined') updatedData['NombreUbicacion'] = data.NombreUbicacion
+
+    if (data.NombreZona === 'null') data.NombreZona = null
+    updatedData['NombreZona'] = {}
+    try {
+      const Zonas = require('../models/zonas.model.js')
+      let ReceivedNombreZona = typeof data.NombreZona === 'string' ? JSON.parse(data.NombreZona) : data.NombreZona
+      NombreZonainfo = Array.isArray(ReceivedNombreZona) ? ReceivedNombreZona[0] : ReceivedNombreZona
+
+      if (!NombreZonainfo._id) {
+        const NombreZonaID = require('mongoose').Types.ObjectId()
+        const Zona = new Zonas({ ...NombreZonainfo, _id: NombreZonaID })
+        Zona.save()
+        updatedData['NombreZona'] = NombreZonaID
+      } else {
+        updatedData['NombreZona'] = NombreZonainfo._id
+      }
+    } catch (e) {
+      updatedData['NombreZona'] = data.NombreZona
+    }
 
     if (typeof data.NombrePersona !== 'undefined') updatedData['NombrePersona'] = data.NombrePersona
 
-    if (typeof data.NombreUbicacion !== 'undefined') updatedData['NombreUbicacion'] = data.NombreUbicacion
+    if (typeof data.EmailPersona !== 'undefined') updatedData['EmailPersona'] = data.EmailPersona
+
+    if (typeof data.FechaPago !== 'undefined') updatedData['FechaPago'] = data.FechaPago
 
     // Find Ticket and update it with the request body
     const query = { populate: 'true' }
     Tickets.findByIdAndUpdate(id, updatedData, { new: true })
+
+      .populate(
+        (query.populate === 'true' || query.populate?.indexOf('Zonas') > -1) && {
+          strictPopulate: false,
+          model: 'Zonas',
+          path: 'NombreZona',
+          populate: [
+            { strictPopulate: false, model: 'Eventos', path: 'NombreEvento' },
+            { strictPopulate: false, model: '', path: '' },
+          ],
+        }
+      )
 
       .then((result) => {
         resolve(result)

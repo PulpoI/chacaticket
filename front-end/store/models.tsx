@@ -5,33 +5,12 @@ export interface IZonasItem {
   Nombre: string
   Precio: Number
   NombreEvento: IEventosItem
-  // Zonas - Ubicaciones - NombreZona - Zonas - Nombre
-  Ubicaciones: IUbicacionesItem[]
+  // Zonas - Tickets - NombreZona - Zonas - Nombre
+  Tickets: ITicketsItem[]
 }
 
 export interface IpaginatedZonas {
   docs: IZonasItem[]
-  totalDocs: number
-  offset: number
-  limit: number
-  totalPages: number
-  page: number
-  pagingCounter: number
-  hasPrevPage: boolean
-  hasNextPage: boolean
-  prevPage: number | null
-  nextPage: number | null
-}
-export interface IUbicacionesItem {
-  _id?: String
-  createdAt: Date
-
-  Nombre: string
-  NombreZona: IZonasItem
-}
-
-export interface IpaginatedUbicaciones {
-  docs: IUbicacionesItem[]
   totalDocs: number
   offset: number
   limit: number
@@ -74,11 +53,14 @@ export interface IpaginatedEventos {
 export interface ITicketsItem {
   _id?: String
   createdAt: Date
-  FechaPago: Date
+
+  NombreUbicacion: string
+  NombreZona: IZonasItem
 
   NombrePersona: string
 
-  NombreUbicacion: string
+  EmailPersona: string
+  FechaPago: Date
 }
 
 export interface IpaginatedTickets {

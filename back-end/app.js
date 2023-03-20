@@ -39,7 +39,6 @@ mongoose
   })
 
 require('./app/routes/zonas.routes.js')(app)
-require('./app/routes/ubicaciones.routes.js')(app)
 require('./app/routes/eventos.routes.js')(app)
 require('./app/routes/tickets.routes.js')(app)
 require('./app/routes/users.routes.js')(app)

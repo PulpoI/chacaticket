@@ -2,7 +2,6 @@ import React from 'react'
 import { Route, Switch } from 'react-router-dom'
 
 const Tickets = React.lazy(() => import('./Pages/Tickets'))
-const Ubicaciones = React.lazy(() => import('./Pages/Ubicaciones'))
 const Zonas = React.lazy(() => import('./Pages/Zonas'))
 const Eventos = React.lazy(() => import('./Pages/Eventos'))
 const Users = React.lazy(() => import('./Pages/Users'))
@@ -21,11 +20,6 @@ const App: React.FunctionComponent = (props: any) => {
       path: '/Tickets',
       name: 'Tickets',
       component: Tickets,
-    },
-    {
-      path: '/Ubicaciones',
-      name: 'Ubicaciones',
-      component: Ubicaciones,
     },
     {
       path: '/Zonas',

@@ -112,9 +112,15 @@ exports.findAll = (options) => {
     .sort(query.sort && { [query.sort.field]: query.sort.method === 'desc' ? -1 : 1 })
 
     .populate(
-      (query.populate === 'true' || query.populate?.indexOf('Ubicaciones') > -1) && {
+      (query.populate === 'true' || query.populate?.indexOf('') > -1) && {
         strictPopulate: false,
-        path: 'Ubicaciones',
+        path: '',
+      }
+    )
+    .populate(
+      (query.populate === 'true' || query.populate?.indexOf('Tickets') > -1) && {
+        strictPopulate: false,
+        path: 'Tickets',
       }
     )
 
@@ -170,9 +176,15 @@ exports.find = (options) => {
       .sort(query.sort && { [query.sort.field]: query.sort.method === 'desc' ? -1 : 1 })
 
       .populate(
-        (query.populate === 'true' || query.populate?.indexOf('Ubicaciones') > -1) && {
+        (query.populate === 'true' || query.populate?.indexOf('') > -1) && {
           strictPopulate: false,
-          path: 'Ubicaciones',
+          path: '',
+        }
+      )
+      .populate(
+        (query.populate === 'true' || query.populate?.indexOf('Tickets') > -1) && {
+          strictPopulate: false,
+          path: 'Tickets',
         }
       )
 
@@ -203,9 +215,15 @@ exports.findOne = (options) => {
     Zonas.findById(id)
 
       .populate(
-        (query.populate === 'true' || query.populate?.indexOf('Ubicaciones') > -1) && {
+        (query.populate === 'true' || query.populate?.indexOf('') > -1) && {
           strictPopulate: false,
-          path: 'Ubicaciones',
+          path: '',
+        }
+      )
+      .populate(
+        (query.populate === 'true' || query.populate?.indexOf('Tickets') > -1) && {
+          strictPopulate: false,
+          path: 'Tickets',
         }
       )
 
@@ -273,9 +291,15 @@ exports.update = (options) => {
     Zonas.findByIdAndUpdate(id, updatedData, { new: true })
 
       .populate(
-        (query.populate === 'true' || query.populate?.indexOf('Ubicaciones') > -1) && {
+        (query.populate === 'true' || query.populate?.indexOf('') > -1) && {
           strictPopulate: false,
-          path: 'Ubicaciones',
+          path: '',
+        }
+      )
+      .populate(
+        (query.populate === 'true' || query.populate?.indexOf('Tickets') > -1) && {
+          strictPopulate: false,
+          path: 'Tickets',
         }
       )
 

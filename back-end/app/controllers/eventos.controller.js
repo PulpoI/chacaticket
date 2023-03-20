@@ -129,7 +129,10 @@ exports.findAll = (options) => {
       (query.populate === 'true' || query.populate?.indexOf('Zonas') > -1) && {
         strictPopulate: false,
         path: 'Zonas',
-        populate: [{ model: 'Ubicaciones', path: 'Ubicaciones', strictPopulate: false }],
+        populate: [
+          { model: '', path: '', strictPopulate: false },
+          { model: 'Tickets', path: 'Tickets', strictPopulate: false },
+        ],
       }
     )
 
@@ -187,7 +190,10 @@ exports.find = (options) => {
         (query.populate === 'true' || query.populate?.indexOf('Zonas') > -1) && {
           strictPopulate: false,
           path: 'Zonas',
-          populate: [{ model: 'Ubicaciones', path: 'Ubicaciones', strictPopulate: false }],
+          populate: [
+            { model: '', path: '', strictPopulate: false },
+            { model: 'Tickets', path: 'Tickets', strictPopulate: false },
+          ],
         }
       )
 
@@ -220,7 +226,10 @@ exports.findOne = (options) => {
         (query.populate === 'true' || query.populate?.indexOf('Zonas') > -1) && {
           strictPopulate: false,
           path: 'Zonas',
-          populate: [{ model: 'Ubicaciones', path: 'Ubicaciones', strictPopulate: false }],
+          populate: [
+            { model: '', path: '', strictPopulate: false },
+            { model: 'Tickets', path: 'Tickets', strictPopulate: false },
+          ],
         }
       )
 
@@ -297,7 +306,10 @@ exports.update = (options) => {
         (query.populate === 'true' || query.populate?.indexOf('Zonas') > -1) && {
           strictPopulate: false,
           path: 'Zonas',
-          populate: [{ model: 'Ubicaciones', path: 'Ubicaciones', strictPopulate: false }],
+          populate: [
+            { model: '', path: '', strictPopulate: false },
+            { model: 'Tickets', path: 'Tickets', strictPopulate: false },
+          ],
         }
       )
 

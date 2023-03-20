@@ -191,12 +191,6 @@ const Users: FunctionComponent = (props: any) => {
               </ListItem>
             </NavLink>
 
-            <NavLink exact to="/Ubicaciones" key="O1dAlMUs">
-              <ListItem button className={classes.itemLink}>
-                <ListItemText>Ubicaciones</ListItemText>
-              </ListItem>
-            </NavLink>
-
             <NavLink exact to="/Tickets" key="H8KZ2Tuy">
               <ListItem button className={classes.itemLink}>
                 <ListItemText>Tickets</ListItemText>

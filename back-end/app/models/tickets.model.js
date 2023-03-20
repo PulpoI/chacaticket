@@ -3,13 +3,22 @@ const mongoosePaginate = require('mongoose-paginate-v2')
 
 const TicketsSchema = mongoose.Schema(
   {
-    FechaPago: Date,
-    NombrePersona: {
-      type: String,
-    },
     NombreUbicacion: {
       type: String,
     },
+
+    NombreZona: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Zonas',
+      autopopulate: true,
+    },
+    NombrePersona: {
+      type: String,
+    },
+    EmailPersona: {
+      type: String,
+    },
+    FechaPago: Date,
   },
   {
     timestamps: true,
@@ -19,9 +28,11 @@ const TicketsSchema = mongoose.Schema(
 
 TicketsSchema.plugin(mongoosePaginate)
 TicketsSchema.index({
-  FechaPago: 'text',
-  NombrePersona: 'text',
   NombreUbicacion: 'text',
+  NombreZona: 'text',
+  NombrePersona: 'text',
+  EmailPersona: 'text',
+  FechaPago: 'text',
 })
 
 const myModel = (module.exports = mongoose.model('Tickets', TicketsSchema, 'tickets'))

@@ -3,7 +3,10 @@ const mongoosePaginate = require('mongoose-paginate-v2')
 
 const UbicacionesSchema = mongoose.Schema(
   {
-    Nombre: {
+    Numero: {
+      type: String,
+    },
+    NombreAsiento: {
       type: String,
     },
 
@@ -21,7 +24,8 @@ const UbicacionesSchema = mongoose.Schema(
 
 UbicacionesSchema.plugin(mongoosePaginate)
 UbicacionesSchema.index({
-  Nombre: 'text',
+  Numero: 'text',
+  NombreAsiento: 'text',
   NombreZona: 'text',
 })
 

@@ -16,9 +16,11 @@ import { createTheme, ThemeProvider } from '@mui/material/styles'
 import TextField from '@mui/material/TextField'
 import Toolbar from '@mui/material/Toolbar'
 import Typography from '@mui/material/Typography'
+import axios from 'axios'
 import moment from 'moment'
 import { useDispatch, useSelector } from 'react-redux'
 import { NavLink } from 'react-router-dom'
+import Autocomplete from '../components/Autocomplete'
 import AddDialog from '../components/Dialog/Dialog'
 import Sidebar from '../components/Sidebar/Sidebar'
 import Field from '../components/Table/Field'
@@ -40,9 +42,11 @@ import AuthService from '../services/auth.service'
 const Tickets: FunctionComponent = (props: any) => {
   const classes = baseClasses
   const initialDataTickets = {
-    FechaPago: '',
-    NombrePersona: '',
     NombreUbicacion: '',
+    NombreZona: null,
+    NombrePersona: '',
+    EmailPersona: '',
+    FechaPago: '',
   }
   const [Ticketsdata, setTicketsData] = React.useState<any>(initialDataTickets)
   const handleTicketsChange = (name: string) => (event: any) => {
@@ -86,6 +90,24 @@ const Tickets: FunctionComponent = (props: any) => {
   const [dialogTicketsAction, setdialogTicketsAction] = React.useState<'add' | 'edit' | 'delete' | ''>('')
   const LocalAddDialog = AddDialog
 
+  const zonasAutocompleteData = useSelector((state: IState) => state.zonas)
+  const [NombreZonaOptions, setNombreZonaOptions] = React.useState<{ label: String; value: String }[]>([])
+  const typeInSearchNombreZonaZonas = (typedIn) => {
+    const searchOptions = { searchString: typedIn, searchField: 'Nombre', page: 1, limit: 10 }
+    axios.get('http://127.0.0.1:4567/api/zonas/search/', { params: searchOptions }).then((result) => {
+      setNombreZonaOptions(
+        result.data.docs.map((zona) => {
+          return { label: zona.Nombre, value: zona._id }
+        })
+      )
+    })
+  }
+  const [NombreZonaValue, setNombreZonaValue] = React.useState(null)
+  React.useEffect(() => {
+    if (!Ticketsdata.NombreZona) return undefined
+    const asArray = Array.isArray(Ticketsdata.NombreZona) ? Ticketsdata.NombreZona : [Ticketsdata.NombreZona]
+    setNombreZonaValue(asArray.map((item) => ({ label: item.Nombre, value: item._id })))
+  }, [Ticketsdata.NombreZona])
   const [tableloadoptions, settableloadoptions] = React.useState<any>({
     page: 1,
     populate: true,
@@ -187,12 +209,6 @@ const Tickets: FunctionComponent = (props: any) => {
               </ListItem>
             </NavLink>
 
-            <NavLink exact to="/Ubicaciones" key="O1dAlMUs">
-              <ListItem button className={classes.itemLink}>
-                <ListItemText>Ubicaciones</ListItemText>
-              </ListItem>
-            </NavLink>
-
             <NavLink exact to="/Tickets" key="H8KZ2Tuy">
               <ListItem button className={classes.itemLink}>
                 <ListItemText>Tickets</ListItemText>
@@ -240,6 +256,61 @@ const Tickets: FunctionComponent = (props: any) => {
                       allowMultipleSubmit={dialogTicketsAction === 'add'}
                     >
                       <TextField
+                        margin="dense"
+                        label="NombreUbicacion"
+                        type="text"
+                        fullWidth
+                        className={'field_NombreUbicacion'}
+                        variant="standard"
+                        value={Ticketsdata.NombreUbicacion || ''}
+                        onChange={handleTicketsChange('NombreUbicacion')}
+                        error={ticketsData?.errField === 'NombreUbicacion'}
+                        helperText={ticketsData?.errField === 'NombreUbicacion' && ticketsData.errMessage}
+                      />
+
+                      <Autocomplete
+                        value={NombreZonaValue}
+                        onType={typeInSearchNombreZonaZonas}
+                        onChange={(newValue) =>
+                          handleTicketsChange('NombreZona')(
+                            newValue?.length ? newValue.map((item) => ({ _id: item.value !== 'new' ? item.value : null, Nombre: item.label })) : []
+                          )
+                        }
+                        loading={zonasAutocompleteData.loadingStatus === 'loading'}
+                        options={NombreZonaOptions}
+                        label="NombreZona"
+                        fullWidth
+                        variant="standard"
+                        margin="dense"
+                      />
+
+                      <TextField
+                        margin="dense"
+                        label="NombrePersona"
+                        type="text"
+                        fullWidth
+                        className={'field_NombrePersona'}
+                        variant="standard"
+                        value={Ticketsdata.NombrePersona || ''}
+                        onChange={handleTicketsChange('NombrePersona')}
+                        error={ticketsData?.errField === 'NombrePersona'}
+                        helperText={ticketsData?.errField === 'NombrePersona' && ticketsData.errMessage}
+                      />
+
+                      <TextField
+                        margin="dense"
+                        label="EmailPersona"
+                        type="text"
+                        fullWidth
+                        className={'field_EmailPersona'}
+                        variant="standard"
+                        value={Ticketsdata.EmailPersona || ''}
+                        onChange={handleTicketsChange('EmailPersona')}
+                        error={ticketsData?.errField === 'EmailPersona'}
+                        helperText={ticketsData?.errField === 'EmailPersona' && ticketsData.errMessage}
+                      />
+
+                      <TextField
                         label="FechaPago"
                         type="datetime-local"
                         fullWidth
@@ -260,38 +331,12 @@ const Tickets: FunctionComponent = (props: any) => {
                           shrink: true,
                         }}
                       />
-
-                      <TextField
-                        margin="dense"
-                        label="NombrePersona"
-                        type="text"
-                        fullWidth
-                        className={'field_NombrePersona'}
-                        variant="standard"
-                        value={Ticketsdata.NombrePersona || ''}
-                        onChange={handleTicketsChange('NombrePersona')}
-                        error={ticketsData?.errField === 'NombrePersona'}
-                        helperText={ticketsData?.errField === 'NombrePersona' && ticketsData.errMessage}
-                      />
-
-                      <TextField
-                        margin="dense"
-                        label="NombreUbicacion"
-                        type="text"
-                        fullWidth
-                        className={'field_NombreUbicacion'}
-                        variant="standard"
-                        value={Ticketsdata.NombreUbicacion || ''}
-                        onChange={handleTicketsChange('NombreUbicacion')}
-                        error={ticketsData?.errField === 'NombreUbicacion'}
-                        helperText={ticketsData?.errField === 'NombreUbicacion' && ticketsData.errMessage}
-                      />
                     </LocalAddDialog>
                   </div>
 
                   <div title="Body">
                     <Table
-                      tableHead={['FechaPago', 'NombrePersona', 'NombreUbicacion', 'Actions']}
+                      tableHead={['NombreUbicacion', 'NombreZona', 'NombrePersona', 'EmailPersona', 'FechaPago', 'Actions']}
                       tableData={ticketsData.foundtickets.length ? ticketsData.foundtickets : (ticketsData.tickets as any)}
                       orderBy={tableloadoptions.sort.field}
                       order={tableloadoptions.sort.method}
@@ -305,11 +350,15 @@ const Tickets: FunctionComponent = (props: any) => {
                         })
                       }}
                     >
-                      <Field value={(fieldData: any) => moment(fieldData.FechaPago).format('DD/MM/YYYY HH:mm')} />
+                      <Field value={(fieldData: any) => fieldData.NombreUbicacion} />
+
+                      <Field value={(fieldData: any) => (fieldData.NombreZona ? fieldData.NombreZona.Nombre : '')} />
 
                       <Field value={(fieldData: any) => fieldData.NombrePersona} />
 
-                      <Field value={(fieldData: any) => fieldData.NombreUbicacion} />
+                      <Field value={(fieldData: any) => fieldData.EmailPersona} />
+
+                      <Field value={(fieldData: any) => moment(fieldData.FechaPago).format('DD/MM/YYYY HH:mm')} />
                       <div className={classes.actionsArea}>
                         <IconButton
                           aria-label="edit"

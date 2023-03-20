@@ -8,7 +8,9 @@ exports.create = async (options) => {
   const data = options.req ? options.req.body : options.data
   const updatedData = {}
 
-  if (typeof data.Nombre !== 'undefined') updatedData['Nombre'] = data.Nombre
+  if (typeof data.Numero !== 'undefined') updatedData['Numero'] = data.Numero
+
+  if (typeof data.NombreAsiento !== 'undefined') updatedData['NombreAsiento'] = data.NombreAsiento
 
   if (data.NombreZona === 'null') data.NombreZona = null
   updatedData['NombreZona'] = {}
@@ -50,7 +52,9 @@ exports.createAsPromise = (options) => {
     const updatedData = {}
     if (data._id) updatedData._id = data._id
 
-    if (typeof data.Nombre !== 'undefined') updatedData['Nombre'] = data.Nombre
+    if (typeof data.Numero !== 'undefined') updatedData['Numero'] = data.Numero
+
+    if (typeof data.NombreAsiento !== 'undefined') updatedData['NombreAsiento'] = data.NombreAsiento
 
     if (data.NombreZona === 'null') data.NombreZona = null
     updatedData['NombreZona'] = {}
@@ -220,7 +224,9 @@ exports.update = (options) => {
     const data = options.req ? options.req.body : options.data
     const updatedData = {}
 
-    if (typeof data.Nombre !== 'undefined') updatedData['Nombre'] = data.Nombre
+    if (typeof data.Numero !== 'undefined') updatedData['Numero'] = data.Numero
+
+    if (typeof data.NombreAsiento !== 'undefined') updatedData['NombreAsiento'] = data.NombreAsiento
 
     if (data.NombreZona === 'null') data.NombreZona = null
     updatedData['NombreZona'] = {}

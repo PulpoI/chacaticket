@@ -25,7 +25,7 @@ const DetallesdeEvento: FunctionComponent = (props: any) => {
   const theme = minimum
   const [currentUser, setcurrentUser] = React.useState<any>(AuthService.getCurrentUser())
   const [profileMenuAnchor, setprofileMenuAnchor] = React.useState<any>(null)
-  const [ubicacionesZona, setubicacionesZona] = React.useState<any>(0)
+  const [ticketsZona, setticketsZona] = React.useState<any>(0)
   const [precioZona, setprecioZona] = React.useState<any>('')
   const [nombreZona, setnombreZona] = React.useState<any>('')
   const [editar, seteditar] = React.useState<any>('')
@@ -40,6 +40,8 @@ const DetallesdeEvento: FunctionComponent = (props: any) => {
   const [fecha, setfecha] = React.useState<any>([])
   const [nombreLugar, setnombreLugar] = React.useState<any>([])
   const [evento, setevento] = React.useState<any>([])
+
+  
 
   if (!authHeaders()) {
     props.history.push('/Login')
@@ -65,6 +67,7 @@ const DetallesdeEvento: FunctionComponent = (props: any) => {
         setzonas(result.data.docs[0].Zonas)
       })
     }
+    
   }, [currentUser])
 
   const guardarNombreEvento = () => {
@@ -133,15 +136,19 @@ const DetallesdeEvento: FunctionComponent = (props: any) => {
       setzonas(result.data.docs[0].Zonas)
     })
   }
-  const agregarUbicaciones = async (zonaId) => {
-    let cantidad = ubicacionesZona
+  const agregarTickets = async (zonaId) => {
+    let cantidad = ticketsZona
     while (cantidad !== 0) {
-      await axios.post(`http://localhost:4567/api/Ubicaciones`, {
-        Ubicacion: cantidad,
+      await axios.post(`http://localhost:4567/api/Tickets`, {
+        NombreUbicacion: cantidad,
         NombreZona: zonaId,
+        FechaPago: '',
       })
       cantidad -= 1
     }
+    await axios.get(`http://localhost:4567/api/Eventos/${eventoId}`).then((result) => {
+      setzonas(result.data.docs[0].Zonas)
+    })
   }
 
   const eliminarZona = async (id) => {
@@ -152,6 +159,7 @@ const DetallesdeEvento: FunctionComponent = (props: any) => {
     )
   }
 
+  console.log(zonas)
   return (
     <React.Fragment>
       <div className={classes.mainPanel}>
@@ -330,10 +338,10 @@ const DetallesdeEvento: FunctionComponent = (props: any) => {
                   <Typography variant="h5">Precio: {zona.Precio}</Typography>
 
                   <List>
-                    {zona.Ubicaciones.map((ubicacion, index) => {
+                    {zona.Tickets.map((ticket, index) => {
                       return (
                         <React.Fragment key={index}>
-                          <ListItemText primary={`Ubicacion: ${ubicacion.Ubicacion}`} />
+                          <ListItemText primary={`Ubicacion: ${ticket.NombreUbicacion}`} />
                         </React.Fragment>
                       )
                     })}
@@ -346,28 +354,28 @@ const DetallesdeEvento: FunctionComponent = (props: any) => {
                       seteditar(zona.Nombre)
                     }}
                   >
-                    Agregar Ubicaciones
+                    Agregar Ticket
                   </Button>
                   {editar === zona.Nombre && (
                     <React.Fragment>
                       <div title="div">
                         <TextField
                           variant="standard"
-                          label="Ingresa la cantidad de Ubicaciones"
+                          label="Ingresa la cantidad de Tickets"
                           type="number"
-                          value={ubicacionesZona}
+                          value={ticketsZona}
                           onChange={(e) => {
-                            setubicacionesZona(e.target.value)
+                            setticketsZona(e.target.value)
                           }}
                         />
 
                         <Button
                           color="primary"
                           onClickCapture={(e) => {
-                            agregarUbicaciones(zona._id)
+                            agregarTickets(zona._id)
                           }}
                         >
-                          Agregar Ubicaciones
+                          Agregar Tickets
                         </Button>
                       </div>
                     </React.Fragment>
