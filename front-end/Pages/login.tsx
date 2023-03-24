@@ -11,8 +11,8 @@ import FormControlLabel from '@mui/material/FormControlLabel'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
 import TextField from '@mui/material/TextField'
 import Typography from '@mui/material/Typography'
+import thememodulescss from 'dist/css/theme.module.scss'
 import { NavLink } from 'react-router-dom'
-import minimum from '../components/Themes/minimum.module.scss'
 
 const aptugotheme = createTheme({
   palette: {
@@ -23,8 +23,12 @@ const aptugotheme = createTheme({
 import AuthService from '../services/auth.service'
 
 const LoginPage: FunctionComponent = (props: any) => {
+  const {
+    history: navigation,
+    match: { params },
+  } = props
   const classes = baseClasses
-  const theme = minimum
+  const theme = thememodulescss
   const [loginError, setloginError] = React.useState<any>(null)
   const [loginData, setloginData] = React.useState<any>({
     Email: '',
@@ -101,7 +105,11 @@ const LoginPage: FunctionComponent = (props: any) => {
                       <Checkbox
                         checked={loginData.RememberMe}
                         onClick={() => {
-                          setloginData({ ...loginData, RememberMe: !loginData.RememberMe })
+                          {
+                            ;() => {
+                              setloginData({ ...loginData, RememberMe: !loginData.RememberMe })
+                            }
+                          }
                         }}
                       />
                     }

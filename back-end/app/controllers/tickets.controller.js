@@ -153,7 +153,11 @@ exports.find = (options) => {
       } else if (Tickets.schema.path(query.searchField).instance === 'Date') {
         findString = { $expr: { $eq: [query.searchString, { $dateToString: { date: `$${query.searchField}`, format: '%Y-%m-%d' } }] } }
       } else {
-        findString = { [query.searchField]: { $regex: new RegExp(query.searchString, 'i') } }
+        if (query.exactMatch) {
+          findString = { [query.searchField]: query.searchString }
+        } else {
+          findString = { [query.searchField]: { $regex: new RegExp(query.searchString, 'i') } }
+        }
       }
 
       if (Tickets.schema.path(query.searchField).instance === 'ObjectID' || Tickets.schema.path(query.searchField).instance === 'Array') {

@@ -17,6 +17,7 @@ import TextField from '@mui/material/TextField'
 import Toolbar from '@mui/material/Toolbar'
 import Typography from '@mui/material/Typography'
 import axios from 'axios'
+import thememodulescss from 'dist/css/theme.module.scss'
 import moment from 'moment'
 import { useDispatch, useSelector } from 'react-redux'
 import { NavLink } from 'react-router-dom'
@@ -26,7 +27,6 @@ import FileUpload from '../components/FileUpload/FileUpload'
 import Sidebar from '../components/Sidebar/Sidebar'
 import Field from '../components/Table/Field'
 import Table from '../components/Table/Table'
-import minimum from '../components/Themes/minimum.module.scss'
 import { addEventos, editEventos, loadEventos, removeEvento, searchEventos } from '../store/actions/eventosActions'
 import { IEventosItem } from '../store/models'
 import { IState } from '../store/reducers/index'
@@ -41,6 +41,10 @@ import authHeaders from '../services/auth-header'
 import AuthService from '../services/auth.service'
 
 const Eventos: FunctionComponent = (props: any) => {
+  const {
+    history: navigation,
+    match: { params },
+  } = props
   const classes = baseClasses
   const initialDataEventos = {
     Nombre: '',
@@ -58,7 +62,7 @@ const Eventos: FunctionComponent = (props: any) => {
     })
   }
   const eventosData = useSelector((state: IState) => state.eventos)
-  const theme = minimum
+  const theme = thememodulescss
   const [currentUser, setcurrentUser] = React.useState<any>(AuthService.getCurrentUser())
   const [profileMenuAnchor, setprofileMenuAnchor] = React.useState<any>(null)
   const dispatch = useDispatch()
@@ -94,7 +98,7 @@ const Eventos: FunctionComponent = (props: any) => {
   const usersAutocompleteData = useSelector((state: IState) => state.users)
   const [NombreLugarOptions, setNombreLugarOptions] = React.useState<{ label: String; value: String }[]>([])
   const typeInSearchNombreLugarUsers = (typedIn) => {
-    const searchOptions = { searchString: typedIn, searchField: 'Lugar', page: 1, limit: 10 }
+    const searchOptions = { searchString: typedIn, searchField: 'Lugar', page: 1, limit: 25 }
     axios.get('http://127.0.0.1:4567/api/users/search/', { params: searchOptions }).then((result) => {
       setNombreLugarOptions(
         result.data.docs.map((usersrecord) => {
@@ -140,7 +144,6 @@ const Eventos: FunctionComponent = (props: any) => {
               <AppBar elevation={3} color="transparent" position="absolute" title="">
                 <Toolbar>
                   <IconButton
-                    color=""
                     onClick={(event) => {
                       setprofileMenuAnchor(event.currentTarget)
                     }}
@@ -228,7 +231,8 @@ const Eventos: FunctionComponent = (props: any) => {
                     <TextField
                       variant="outlined"
                       placeholder="Search Evento..."
-                      margin="normal"
+                      margin="dense"
+                      size="small"
                       className={theme.extensibleInput}
                       type="text"
                       onChange={searchForEventos}

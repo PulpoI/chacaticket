@@ -12,8 +12,8 @@ import blue from '@mui/material/colors/blue'
 import Container from '@mui/material/Container'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
 import TextField from '@mui/material/TextField'
+import thememodulescss from 'dist/css/theme.module.scss'
 import { useDispatch } from 'react-redux'
-import minimum from '../components/Themes/minimum.module.scss'
 import { mergeClasses } from '../services/utils'
 import { addUsers, editUsers } from '../store/actions/usersActions'
 
@@ -49,8 +49,12 @@ const localStyles = {
   },
 }
 const RetrievePassword: FunctionComponent = (props: any) => {
+  const {
+    history: navigation,
+    match: { params },
+  } = props
   const classes = mergeClasses(baseClasses, localStyles)
-  const theme = minimum
+  const theme = thememodulescss
   const [userData, setuserData] = React.useState<any>({ _id: null, Password: '' })
   const [recoverSuccess, setrecoverSuccess] = React.useState<any>(null)
   const [recoverError, setrecoverError] = React.useState<any>(null)

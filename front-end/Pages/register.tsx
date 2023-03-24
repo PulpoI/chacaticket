@@ -8,9 +8,9 @@ import Container from '@mui/material/Container'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
 import TextField from '@mui/material/TextField'
 import Typography from '@mui/material/Typography'
+import thememodulescss from 'dist/css/theme.module.scss'
 import { useDispatch, useSelector } from 'react-redux'
 import FileUpload from '../components/FileUpload/FileUpload'
-import minimum from '../components/Themes/minimum.module.scss'
 import { mergeClasses } from '../services/utils'
 import { addUsers, editUsers } from '../store/actions/usersActions'
 import { IState } from '../store/reducers/index'
@@ -44,6 +44,10 @@ const localStyles = {
   },
 }
 const Register: FunctionComponent = (props: any) => {
+  const {
+    history: navigation,
+    match: { params },
+  } = props
   const classes = mergeClasses(baseClasses, localStyles)
   const initialDataUsers = {
     FirstName: '',
@@ -63,7 +67,7 @@ const Register: FunctionComponent = (props: any) => {
       [name]: value,
     })
   }
-  const theme = minimum
+  const theme = thememodulescss
   const [registerError, setregisterError] = React.useState<any>(null)
   const dispatch = useDispatch()
 

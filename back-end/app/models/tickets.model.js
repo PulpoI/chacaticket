@@ -6,7 +6,6 @@ const TicketsSchema = mongoose.Schema(
     NombreUbicacion: {
       type: String,
     },
-
     NombreZona: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Zonas',
@@ -15,6 +14,7 @@ const TicketsSchema = mongoose.Schema(
     NombrePersona: {
       type: String,
     },
+
     EmailPersona: {
       type: String,
     },

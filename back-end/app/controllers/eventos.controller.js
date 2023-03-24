@@ -161,7 +161,11 @@ exports.find = (options) => {
       } else if (Eventos.schema.path(query.searchField).instance === 'Date') {
         findString = { $expr: { $eq: [query.searchString, { $dateToString: { date: `$${query.searchField}`, format: '%Y-%m-%d' } }] } }
       } else {
-        findString = { [query.searchField]: { $regex: new RegExp(query.searchString, 'i') } }
+        if (query.exactMatch) {
+          findString = { [query.searchField]: query.searchString }
+        } else {
+          findString = { [query.searchField]: { $regex: new RegExp(query.searchString, 'i') } }
+        }
       }
 
       if (Eventos.schema.path(query.searchField).instance === 'ObjectID' || Eventos.schema.path(query.searchField).instance === 'Array') {

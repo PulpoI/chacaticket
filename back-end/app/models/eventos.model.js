@@ -7,11 +7,11 @@ const EventosSchema = mongoose.Schema(
       type: String,
     },
     Fecha: Date,
+
     Hora: {
       type: String,
     },
     Imagen: String,
-
     NombreLugar: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Users',

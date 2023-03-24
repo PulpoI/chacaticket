@@ -7,7 +7,6 @@ const ZonasSchema = mongoose.Schema(
       type: String,
     },
     Precio: Number,
-
     NombreEvento: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Eventos',

@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const authHeaders = () => {
+const authHeaders = async () => {
   const token = localStorage.getItem('user') && localStorage.getItem('token')
   if (token) {
     axios.defaults.headers.common['Authorization'] = token

@@ -147,7 +147,11 @@ exports.find = (options) => {
       } else if (Zonas.schema.path(query.searchField).instance === 'Date') {
         findString = { $expr: { $eq: [query.searchString, { $dateToString: { date: `$${query.searchField}`, format: '%Y-%m-%d' } }] } }
       } else {
-        findString = { [query.searchField]: { $regex: new RegExp(query.searchString, 'i') } }
+        if (query.exactMatch) {
+          findString = { [query.searchField]: query.searchString }
+        } else {
+          findString = { [query.searchField]: { $regex: new RegExp(query.searchString, 'i') } }
+        }
       }
 
       if (Zonas.schema.path(query.searchField).instance === 'ObjectID' || Zonas.schema.path(query.searchField).instance === 'Array') {

@@ -8,16 +8,20 @@ import ListItemText from '@mui/material/ListItemText'
 import Menu from '@mui/material/Menu'
 import MenuItem from '@mui/material/MenuItem'
 import Toolbar from '@mui/material/Toolbar'
+import thememodulescss from 'dist/css/theme.module.scss'
 import { NavLink } from 'react-router-dom'
 import Sidebar from '../components/Sidebar/Sidebar'
-import minimum from '../components/Themes/minimum.module.scss'
 
 import authHeaders from '../services/auth-header'
 import AuthService from '../services/auth.service'
 
 const AdminDashboard: FunctionComponent = (props: any) => {
+  const {
+    history: navigation,
+    match: { params },
+  } = props
   const classes = baseClasses
-  const theme = minimum
+  const theme = thememodulescss
   const [currentUser, setcurrentUser] = React.useState<any>(AuthService.getCurrentUser())
   const [profileMenuAnchor, setprofileMenuAnchor] = React.useState<any>(null)
 
@@ -35,7 +39,6 @@ const AdminDashboard: FunctionComponent = (props: any) => {
             <AppBar elevation={3} color="transparent" position="absolute" title="">
               <Toolbar>
                 <IconButton
-                  color=""
                   onClick={(event) => {
                     setprofileMenuAnchor(event.currentTarget)
                   }}

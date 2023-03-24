@@ -21,6 +21,7 @@ import TextField from '@mui/material/TextField'
 import Toolbar from '@mui/material/Toolbar'
 import Typography from '@mui/material/Typography'
 import axios from 'axios'
+import thememodulescss from 'dist/css/theme.module.scss'
 import moment from 'moment'
 import { useDispatch, useSelector } from 'react-redux'
 import { NavLink } from 'react-router-dom'
@@ -29,7 +30,6 @@ import AddDialog from '../components/Dialog/Dialog'
 import Sidebar from '../components/Sidebar/Sidebar'
 import Field from '../components/Table/Field'
 import Table from '../components/Table/Table'
-import minimum from '../components/Themes/minimum.module.scss'
 import { addTickets, editTickets, loadTickets, removeTicket, searchTickets } from '../store/actions/ticketsActions'
 import { ITicketsItem } from '../store/models'
 import { IState } from '../store/reducers/index'
@@ -45,6 +45,10 @@ import authHeaders from '../services/auth-header'
 import AuthService from '../services/auth.service'
 
 const Tickets: FunctionComponent = (props: any) => {
+  const {
+    history: navigation,
+    match: { params },
+  } = props
   const classes = baseClasses
   const initialDataTickets = {
     NombreUbicacion: '',
@@ -63,7 +67,7 @@ const Tickets: FunctionComponent = (props: any) => {
     })
   }
   const ticketsData = useSelector((state: IState) => state.tickets)
-  const theme = minimum
+  const theme = thememodulescss
   const [currentUser, setcurrentUser] = React.useState<any>(AuthService.getCurrentUser())
   const [profileMenuAnchor, setprofileMenuAnchor] = React.useState<any>(null)
   const dispatch = useDispatch()
@@ -99,7 +103,7 @@ const Tickets: FunctionComponent = (props: any) => {
   const zonasAutocompleteData = useSelector((state: IState) => state.zonas)
   const [NombreZonaOptions, setNombreZonaOptions] = React.useState<{ label: String; value: String }[]>([])
   const typeInSearchNombreZonaZonas = (typedIn) => {
-    const searchOptions = { searchString: typedIn, searchField: 'Nombre', page: 1, limit: 10 }
+    const searchOptions = { searchString: typedIn, searchField: 'Nombre', page: 1, limit: 25 }
     axios.get('http://127.0.0.1:4567/api/zonas/search/', { params: searchOptions }).then((result) => {
       setNombreZonaOptions(
         result.data.docs.map((zona) => {
@@ -145,7 +149,6 @@ const Tickets: FunctionComponent = (props: any) => {
               <AppBar elevation={3} color="transparent" position="absolute" title="">
                 <Toolbar>
                   <IconButton
-                    color=""
                     onClick={(event) => {
                       setprofileMenuAnchor(event.currentTarget)
                     }}
@@ -233,7 +236,8 @@ const Tickets: FunctionComponent = (props: any) => {
                     <TextField
                       variant="outlined"
                       placeholder="Search Ticket..."
-                      margin="normal"
+                      margin="dense"
+                      size="small"
                       className={theme.extensibleInput}
                       type="text"
                       onChange={searchForTickets}

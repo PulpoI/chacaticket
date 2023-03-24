@@ -6,20 +6,25 @@ const UsersSchema = mongoose.Schema(
     FirstName: {
       type: String,
     },
+
     LastName: {
       type: String,
     },
+
     Email: {
       type: String,
     },
+
     Password: {
       type: String,
     },
     ProfilePic: String,
     Role: String,
+
     Lugar: {
       type: String,
     },
+
     DireccionLugar: {
       type: String,
     },

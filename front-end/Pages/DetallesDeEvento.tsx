@@ -1,17 +1,23 @@
 import React, { FunctionComponent } from 'react'
 import baseClasses from './layout.module.scss'
 
+import { Logout } from '@mui/icons-material'
+import AppBar from '@mui/material/AppBar'
 import Button from '@mui/material/Button'
 import Card from '@mui/material/Card'
 import CardActions from '@mui/material/CardActions'
 import CardContent from '@mui/material/CardContent'
 import CardHeader from '@mui/material/CardHeader'
 import Container from '@mui/material/Container'
+import ListItem from '@mui/material/ListItem'
+import ListItemText from '@mui/material/ListItemText'
 import TextField from '@mui/material/TextField'
+import Toolbar from '@mui/material/Toolbar'
 import Typography from '@mui/material/Typography'
 import axios from 'axios'
+import thememodulescss from 'dist/css/theme.module.scss'
 import Moment from 'react-moment'
-import minimum from '../components/Themes/minimum.module.scss'
+import { NavLink } from 'react-router-dom'
 
 import moment from 'moment'
 import { useParams } from 'react-router-dom'
@@ -19,8 +25,12 @@ import authHeaders from '../services/auth-header'
 import AuthService from '../services/auth.service'
 
 const DetallesdeEvento: FunctionComponent = (props: any) => {
+  const {
+    history: navigation,
+    match: { params },
+  } = props
   const classes = baseClasses
-  const theme = minimum
+  const theme = thememodulescss
   const [currentUser, setcurrentUser] = React.useState<any>(AuthService.getCurrentUser())
   const [profileMenuAnchor, setprofileMenuAnchor] = React.useState<any>(null)
   const [ticketsZona, setticketsZona] = React.useState<any>(0)
@@ -40,6 +50,7 @@ const DetallesdeEvento: FunctionComponent = (props: any) => {
   const [fecha, setfecha] = React.useState<any>([])
   const [nombreLugar, setnombreLugar] = React.useState<any>([])
   const [evento, setevento] = React.useState<any>([])
+  const [user, setuser] = React.useState<any>('')
 
   if (!authHeaders()) {
     props.history.push('/Login')
@@ -47,10 +58,13 @@ const DetallesdeEvento: FunctionComponent = (props: any) => {
 
   // Theme selection
 
+  currentUser.then(function (user) {
+    setuser(user)
+  })
   const { eventoId } = useParams()
 
   React.useEffect(() => {
-    if (currentUser?._id) {
+    if (user?._id) {
       axios.get(`http://localhost:4567/api/Eventos/${eventoId}`).then((result) => {
         setevento(result.data.docs[0])
 
@@ -65,7 +79,7 @@ const DetallesdeEvento: FunctionComponent = (props: any) => {
         setzonas(result.data.docs[0].Zonas)
       })
     }
-  }, [currentUser])
+  }, [user])
 
   const guardarNombreEvento = () => {
     axios
@@ -76,7 +90,6 @@ const DetallesdeEvento: FunctionComponent = (props: any) => {
         setevento(result.data)
       })
   }
-
   const guardarImagenEvento = async () => {
     const data = new FormData()
     data.append('Imagen', nuevaImagenEvento[0])
@@ -84,7 +97,6 @@ const DetallesdeEvento: FunctionComponent = (props: any) => {
       setevento(result.data)
     })
   }
-
   const guardarFechaEvento = () => {
     axios
       .put(`http://localhost:4567/api/Eventos/${eventoId}`, {
@@ -94,7 +106,6 @@ const DetallesdeEvento: FunctionComponent = (props: any) => {
         setfecha(result.data.Fecha)
       })
   }
-
   const guardarHoraEvento = () => {
     axios
       .put(`http://localhost:4567/api/Eventos/${eventoId}`, {
@@ -112,7 +123,6 @@ const DetallesdeEvento: FunctionComponent = (props: any) => {
         Precio: nuevoPrecioZona,
       })
       .then((result) => {})
-
     axios.get(`http://localhost:4567/api/Eventos/${eventoId}`).then((result) => {
       setzonas(result.data.docs[0].Zonas)
       sethora(result.data.docs[0].Hora)
@@ -185,6 +195,48 @@ const DetallesdeEvento: FunctionComponent = (props: any) => {
   return (
     <React.Fragment>
       <div className={classes.mainPanel}>
+        <AppBar elevation={0} color="primary" position="sticky" title="Navbar">
+          <Toolbar>
+            <div title="Nav Bar" style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', justifyContent: 'space-between', width: '100%' }}>
+              <div title="Logo">
+                <picture>
+                  <img src="/img/PngItem_467799.png" alt="/img/PngItem_467799.png" width="100" height="100" />
+                </picture>
+              </div>
+
+              <div title="Nav Links" style={{ display: 'flex' }}>
+                <NavLink exact to="/mis-eventos" key="imit0EVR">
+                  <ListItem button className={classes.itemLink}>
+                    <ListItemText>Mis eventos</ListItemText>
+                  </ListItem>
+                </NavLink>
+
+                <NavLink exact to="/crear-evento" key="dqn1IUCR">
+                  <ListItem button className={classes.itemLink}>
+                    <ListItemText>Crear evento</ListItemText>
+                  </ListItem>
+                </NavLink>
+              </div>
+
+              <div title="Logout">
+                <Button
+                  color="primary"
+                  onClickCapture={(e) => {
+                    doLogout()
+                  }}
+                >
+                  <Logout
+                    color="error"
+                    sx={{
+                      fontSize: 30,
+                    }}
+                  />
+                </Button>
+              </div>
+            </div>
+          </Toolbar>
+        </AppBar>
+
         <Container>
           <div title="Card Evento">
             <Card sx={{ height: 'fit-content', maxWidth: '300px' }}>
@@ -517,6 +569,12 @@ const DetallesdeEvento: FunctionComponent = (props: any) => {
 
           <div title="Ubicaciones"></div>
         </Container>
+      </div>
+
+      <div title="Footer" style={{ paddingBlock: '3rem', backgroundColor: 'black', color: 'white' }}>
+        <div title="div" style={{ display: 'flex', justifyContent: 'center' }}>
+          <Typography variant="h6">Copyright CHACATICKET</Typography>
+        </div>
       </div>
     </React.Fragment>
   )
