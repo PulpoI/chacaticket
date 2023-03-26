@@ -114,7 +114,7 @@ const MisEventos: FunctionComponent = (props: any) => {
         </AppBar>
 
         <div title="Container">
-          <div title="Main" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '2rem' }}>
+          <div title="Main" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '3rem' }}>
             {loader && (
               <React.Fragment>
                 <div title="Loader" className={theme.lds}></div>

@@ -75,11 +75,11 @@
     "@redux-devtools/extension": "3.2.2",
     "redux-observable": "2.0.0",
     "rxjs": "7.5.6",
-    "moment": "latest",
-    "react-moment": "latest",
     "@fortawesome/fontawesome-svg-core": "6.3.0",
     "@fortawesome/free-solid-svg-icons": "6.3.0",
     "@fortawesome/react-fontawesome": "0.2.0",
+    "moment": "latest",
+    "react-moment": "latest",
     "react-select": "^5.4.0",
     "typesafe-actions": "5.1.0"
   },
