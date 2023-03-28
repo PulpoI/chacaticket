@@ -73,7 +73,9 @@ const DetallesdeEvento: FunctionComponent = (props: any) => {
           setzonas(result.data.docs[0].Zonas)
         })
         .finally(() => {
-          setloader(false)
+          setTimeout(() => {
+            setloader(false)
+          }, 400)
         })
     }
   }, [user])

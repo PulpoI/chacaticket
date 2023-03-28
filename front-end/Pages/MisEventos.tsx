@@ -63,7 +63,9 @@ const MisEventos: FunctionComponent = (props: any) => {
           )
         )
         .finally(() => {
-          setloader(false)
+          setTimeout(() => {
+            setloader(false)
+          }, 400)
         })
     }
   }, [user])
@@ -121,7 +123,7 @@ const MisEventos: FunctionComponent = (props: any) => {
               </React.Fragment>
             )}
 
-            {misEventos.length > 0 && (
+            {!loader && (
               <React.Fragment>
                 <Typography variant="h3">Mis eventos</Typography>
 
